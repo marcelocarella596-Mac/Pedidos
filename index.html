@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Perseverancia - Parrilla</title>
+<style>
+body{margin:0;background:#0a0a0a;color:#fff;font-family:Arial}
+header{display:flex;justify-content:space-between;align-items:center;padding:15px 5%;background:#0a0a0a;border-bottom:1px solid #d4af37;position:sticky;top:0;z-index:20}
+.logo{color:#d4af37;font-size:1.4rem;font-weight:700}
+.container{max-width:1100px;margin:0 auto;padding:20px}
+.title{text-align:center;color:#d4af37;font-size:2.2rem;margin:30px 0 10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+.card{background:#151515;border:1px solid #d4af37;border-radius:10px;overflow:hidden}
+.card img{width:100%;height:200px;object-fit:cover}
+.card-body{padding:15px;text-align:center}
+.price{color:#d4af37;font-weight:700;margin:8px 0}
+.add-btn{width:100%;background:#d4af37;color:#000;border:none;padding:10px;border-radius:6px;font-weight:700;cursor:pointer;margin-top:8px}
+#cart{position:fixed;right:15px;bottom:15px;background:#151515;border:2px solid #d4af37;border-radius:12px;padding:15px;width:330px;max-height:70vh;overflow-y:auto;z-index:30}
+.cart-item{display:flex;justify-content:space-between;font-size:0.85rem;padding:6px 0;border-bottom:1px dotted #333}
+.total{font-weight:700;color:#d4af37;margin-top:10px;text-align:right}
+.wa-btn{width:100%;background:#25D366;color:#fff;border:none;padding:12px;border-radius:6px;font-weight:700;cursor:pointer;margin-top:10px}
+</style>
+</head>
+<body>
+<header>
+<div class="logo">LA PERSEVERANCIA<br><span style="font-size:0.6rem">Av. Argentina 5801 - 11:00 a 15:00</span></div>
+<div>🛒 <span id="cart-count" style="color:#d4af37;font-weight:700">0</span></div>
+</header>
+
+<div class="container">
+<h2 class="title">NUESTRO MENÚ - HACE TU PEDIDO</h2>
+<div class="grid">
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1546964053-d2934a56c4ab?w=600" alt="Asado">
+<div class="card-body"><h3>ASADO CON FRITAS</h3><p class="price">$17.000</p><button class="add-btn" onclick="addToCart('Asado con Fritas',17000)">AGREGAR AL PEDIDO</button></div>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1558030006-450066393d65?w=600" alt="Bife">
+<div class="card-body"><h3>BIFE DE COSTILLA CON PAPAS</h3><p class="price">$17.000</p><button class="add-btn" onclick="addToCart('Bife de Costilla con Papas',17000)">AGREGAR AL PEDIDO</button></div>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1615937657715-bc7b4b7962c1?w=600" alt="Choripan">
+<div class="card-body"><h3>CHORIPÁN</h3><p class="price">$6.500</p><button class="add-btn" onclick="addToCart('Choripán',6500)">AGREGAR AL PEDIDO</button></div>
+</div>
+
+<div class="card">
+<div class="card-body"><h3>MILANESA CON FRITAS</h3><p class="price">$14.500</p><button class="add-btn" onclick="addToCart('Milanesa con Fritas',14500)">AGREGAR AL PEDIDO</button></div>
+</div>
+
+<div class="card">
+<div class="card-body"><h3>TORTILLA DE ACELGA</h3><p class="price">$9.000</p><button class="add-btn" onclick="addToCart('Tortilla de Acelga',9000)">AGREGAR AL PEDIDO</button></div>
+</div>
+
+<div class="card">
+<div class="card-body"><h3>BUÑUELOS x6</h3><p class="price">$1.800</p><button class="add-btn" onclick="addToCart('Buñuelos x6',1800)">AGREGAR AL PEDIDO</button></div>
+</div>
+
+<div class="card"><div class="card-body"><h3>VACÍO SOLO/COMPLETO</h3><p>$15.000 / $19.000</p><button class="add-btn" onclick="addToCart('Vacío solo',15000)">SOLO</button><button class="add-btn" style="background:#222;color:#d4af37;border:1px solid #d4af37" onclick="addToCart('Vacío completo',19000)">COMPLETO</button></div></div>
+
+<div class="card"><div class="card-body"><h3>BONDIOLA SOLO/COMPLETA</h3><p>$13.000 / $16.500</p><button class="add-btn" onclick="addToCart('Bondiola solo',13000)">SOLO</button><button class="add-btn" style="background:#222;color:#d4af37;border:1px solid #d4af37" onclick="addToCart('Bondiola completa',16500)">COMPLETA</button></div></div>
+
+<div class="card"><div class="card-body"><h3>BEBIDAS Y POSTRES</h3><p style="font-size:0.8rem;color:#aaa">Bebidas $3500 a $11000 - Postres $4000-$4500</p><button class="add-btn" onclick="addToCart('Bebida/Postre (aclarar)',0)">AGREGAR (aclarar en WhatsApp)</button></div></div>
+
+</div>
+</div>
+
+<div id="cart">
+<h3 style="color:#d4af37">🛒 Tu Pedido</h3>
+<div id="cart-items"><p style="color:#777">Vacío</p></div>
+<div class="total">Total: $<span id="cart-total">0</span></div>
+<button class="wa-btn" onclick="sendWhatsApp()">ENVIAR POR WHATSAPP</button>
+</div>
+
+<script>
+let cart=[];
+function addToCart(name,price){cart.push({name,price});renderCart()}
+function renderCart(){
+  let html='';let total=0;
+  cart.forEach((it,i)=>{total+=it.price;html+=`<div class="cart-item"><span>${it.name}</span><span>$${it.price} <a href="#" onclick="removeItem(${i});return false" style="color:red">x</a></span></div>`});
+  document.getElementById('cart-items').innerHTML=html||'<p style="color:#777">Vacío</p>';
+  document.getElementById('cart-total').textContent=total;
+  document.getElementById('cart-count').textContent=cart.length;
+}
+function removeItem(i){cart.splice(i,1);renderCart()}
+function sendWhatsApp(){
+  if(!cart.length){alert('Agrega items');return}
+  let msg='Hola La Perseverancia! Quiero pedir:%0A';let total=0;
+  cart.forEach(it=>{msg+=`- ${it.name} $${it.price}%0A`;total+=it.price});
+  msg+=`%0ATotal: $${total}%0ADirección: `;
+  window.open('https://wa.me/5491156598000?text='+msg,'_blank');
+}
+</script>
+</body>
+</html>
