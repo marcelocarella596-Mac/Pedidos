@@ -1,97 +1,1026 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>La Perseverancia - Parrilla</title>
-<style>
-body{margin:0;background:#0a0a0a;color:#fff;font-family:Arial}
-header{display:flex;justify-content:space-between;align-items:center;padding:15px 5%;background:#0a0a0a;border-bottom:1px solid #d4af37;position:sticky;top:0;z-index:20}
-.logo{color:#d4af37;font-size:1.4rem;font-weight:700}
-.container{max-width:1100px;margin:0 auto;padding:20px}
-.title{text-align:center;color:#d4af37;font-size:2.2rem;margin:30px 0 10px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
-.card{background:#151515;border:1px solid #d4af37;border-radius:10px;overflow:hidden}
-.card img{width:100%;height:200px;object-fit:cover}
-.card-body{padding:15px;text-align:center}
-.price{color:#d4af37;font-weight:700;margin:8px 0}
-.add-btn{width:100%;background:#d4af37;color:#000;border:none;padding:10px;border-radius:6px;font-weight:700;cursor:pointer;margin-top:8px}
-#cart{position:fixed;right:15px;bottom:15px;background:#151515;border:2px solid #d4af37;border-radius:12px;padding:15px;width:330px;max-height:70vh;overflow-y:auto;z-index:30}
-.cart-item{display:flex;justify-content:space-between;font-size:0.85rem;padding:6px 0;border-bottom:1px dotted #333}
-.total{font-weight:700;color:#d4af37;margin-top:10px;text-align:right}
-.wa-btn{width:100%;background:#25D366;color:#fff;border:none;padding:12px;border-radius:6px;font-weight:700;cursor:pointer;margin-top:10px}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parrilla La Perseverancia</title>
+  <style>
+    :root {
+      --bg-color: #121212;
+      --card-bg: #1e1e1e;
+      --accent-yellow: #ffc107;
+      --accent-green: #25d366;
+      --text-main: #ffffff;
+      --text-muted: #a0a0a0;
+      --pill-bg: #2a2a2a;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      padding-bottom: 90px;
+    }
+
+    .header-banner {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .restaurant-info {
+      padding: 16px;
+    }
+
+    .restaurant-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--accent-yellow);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .restaurant-meta {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .badges-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 14px;
+      overflow-x: auto;
+    }
+
+    .badge {
+      background-color: var(--pill-bg);
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .categories-nav {
+      display: flex;
+      gap: 8px;
+      padding: 12px 16px;
+      overflow-x: auto;
+      position: sticky;
+      top: 0;
+      background-color: var(--bg-color);
+      z-index: 10;
+      border-bottom: 1px solid #222;
+    }
+
+    .cat-pill {
+      background-color: var(--pill-bg);
+      color: var(--text-main);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .cat-pill:hover, .cat-pill.active {
+      background-color: var(--accent-yellow);
+      color: #000;
+    }
+
+    .section-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--accent-yellow);
+      padding: 20px 16px 4px 16px;
+      text-transform: uppercase;
+    }
+
+    .product-card {
+      background-color: var(--card-bg);
+      margin: 0 16px 12px 16px;
+      border-radius: 12px;
+      padding: 12px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .product-details {
+      flex: 1;
+    }
+
+    .product-name {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .product-price {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--accent-yellow);
+    }
+
+    .qty-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-qty {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: none;
+      background-color: var(--accent-yellow);
+      color: #000;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .qty-count {
+      font-size: 14px;
+      font-weight: bold;
+      min-width: 16px;
+      text-align: center;
+    }
+
+    .bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: #1a1a1a;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid #333;
+      z-index: 100;
+    }
+
+    .cart-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cart-title {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+
+    .cart-total {
+      font-size: 16px;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .checkout-btn {
+      background-color: var(--accent-green);
+      color: #fff;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .modal-content {
+      background: var(--card-bg);
+      padding: 20px;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .modal-content h2 {
+      margin-bottom: 16px;
+      font-size: 18px;
+      color: var(--accent-yellow);
+    }
+
+    .form-group {
+      margin-bottom: 12px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #333;
+      background: #2a2a2a;
+      color: #fff;
+      font-size: 14px;
+    }
+
+    .alias-info {
+      background-color: #2a2a2a;
+      border: 1px dashed var(--accent-yellow);
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      margin-top: 6px;
+      color: var(--accent-yellow);
+      display: none;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .btn-cancel {
+      flex: 1;
+      background: #444;
+      color: #fff;
+      border: none;
+      padding: 10px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .btn-submit {
+      flex: 1;
+      background: var(--accent-green);
+      color: #fff;
+      border: none;
+      padding: 10px;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
-<header>
-<div class="logo">LA PERSEVERANCIA<br><span style="font-size:0.6rem">Av. Argentina 5801 - 11:00 a 15:00</span></div>
-<div>🛒 <span id="cart-count" style="color:#d4af37;font-weight:700">0</span></div>
-</header>
 
-<div class="container">
-<h2 class="title">NUESTRO MENÚ - HACE TU PEDIDO</h2>
-<div class="grid">
+  <img class="header-banner" src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=1000&q=80" alt="Parrilla La Perseverancia">
 
-<div class="card">
-<img src="https://images.unsplash.com/photo-1546964053-d2934a56c4ab?w=600" alt="Asado">
-<div class="card-body"><h3>ASADO CON FRITAS</h3><p class="price">$17.000</p><button class="add-btn" onclick="addToCart('Asado con Fritas',17000)">AGREGAR AL PEDIDO</button></div>
-</div>
+  <div class="restaurant-info">
+    <h1 class="restaurant-title">PARRILLA LA PERSEVERANCIA</h1>
+    <div class="restaurant-meta">📍 Av. Argentina 5801 • Tel: 1140434137 / 1139525167</div>
+    <div class="badges-row">
+      <div class="badge">🛵 Delivery</div>
+      <div class="badge">🛍️ Para Llevar (Take Away)</div>
+      <div class="badge">💳 Pedidos por WhatsApp</div>
+    </div>
+  </div>
 
-<div class="card">
-<img src="https://images.unsplash.com/photo-1558030006-450066393d65?w=600" alt="Bife">
-<div class="card-body"><h3>BIFE DE COSTILLA CON PAPAS</h3><p class="price">$17.000</p><button class="add-btn" onclick="addToCart('Bife de Costilla con Papas',17000)">AGREGAR AL PEDIDO</button></div>
-</div>
+  <nav class="categories-nav">
+    <a href="#parrilla" class="cat-pill active">PARRILLA</a>
+    <a href="#minutas" class="cat-pill">MINUTAS</a>
+    <a href="#sandwiches" class="cat-pill">SÁNDWICHES</a>
+    <a href="#ensaladas" class="cat-pill">ENSALADAS</a>
+    <a href="#postres" class="cat-pill">POSTRES</a>
+    <a href="#bebidas" class="cat-pill">BEBIDAS</a>
+  </nav>
 
-<div class="card">
-<img src="https://images.unsplash.com/photo-1615937657715-bc7b4b7962c1?w=600" alt="Choripan">
-<div class="card-body"><h3>CHORIPÁN</h3><p class="price">$6.500</p><button class="add-btn" onclick="addToCart('Choripán',6500)">AGREGAR AL PEDIDO</button></div>
-</div>
+  <!-- PARRILLA -->
+  <div id="parrilla">
+    <h2 class="section-title">PARRILLA</h2>
+    
+    <div class="product-card">
+      <div class="product-details">
+        <div class="product-name">Asado c/ Fritas (1/2)</div>
+        <div class="product-price">$25.000</div>
+      </div>
+      <div class="qty-controls">
+        <button class="btn-qty" onclick="changeQty('asado_medio', -1)">-</button>
+        <span class="qty-count" id="qty-asado_medio">0</span>
+        <button class="btn-qty" onclick="changeQty('asado_medio', 1)">+</button>
+      </div>
+    </div>
 
-<div class="card">
-<div class="card-body"><h3>MILANESA CON FRITAS</h3><p class="price">$14.500</p><button class="add-btn" onclick="addToCart('Milanesa con Fritas',14500)">AGREGAR AL PEDIDO</button></div>
-</div>
+    <div class="product-card">
+      <div class="product-details">
+        <div class="product-name">Asado c/ Fritas (Entero)</div>
+        <div class="product-price">$28.000</div>
+      </div>
+      <div class="qty-controls">
+        <button class="btn-qty" onclick="changeQty('asado_entero', -1)">-</button>
+        <span class="qty-count" id="qty-asado_entero">0</span>
+        <button class="btn-qty" onclick="changeQty('asado_entero', 1)">+</button>
+      </div>
+    </div>
 
-<div class="card">
-<div class="card-body"><h3>TORTILLA DE ACELGA</h3><p class="price">$9.000</p><button class="add-btn" onclick="addToCart('Tortilla de Acelga',9000)">AGREGAR AL PEDIDO</button></div>
-</div>
+    <div class="product-card">
+      <div class="product-details">
+        <div class="product-name">Vacío c/ Fritas (1/2)</div>
+        <div class="product-price">$29.000</div>
+      </div>
+      <div class="qty-controls">
+        <button class="btn-qty" onclick="changeQty('vacio_medio', -1)">-</button>
+        <span class="qty-count" id="qty-vacio_medio">0</span>
+        <button class="btn-qty" onclick="changeQty('vacio_medio', 1)">+</button>
+      </div>
+    </div>
 
-<div class="card">
-<div class="card-body"><h3>BUÑUELOS x6</h3><p class="price">$1.800</p><button class="add-btn" onclick="addToCart('Buñuelos x6',1800)">AGREGAR AL PEDIDO</button></div>
-</div>
+    <div class="product-card">
+      <div class="product-details">
+        <div class="product-name">Vacío c/ Fritas (Entero)</div>
+        <div class="product-price">$32.000</div>
+      </div>
+      <div class="qty-controls">
+        <button class="btn-qty" onclick="changeQty('vacio_entero', -1)">-</button>
+        <span class="qty-count" id="qty-vacio_entero">0</span>
+        <button class="btn-qty" onclick="changeQty('vacio_entero', 1)">+</button>
+      </div>
+    </div>
 
-<div class="card"><div class="card-body"><h3>VACÍO SOLO/COMPLETO</h3><p>$15.000 / $19.000</p><button class="add-btn" onclick="addToCart('Vacío solo',15000)">SOLO</button><button class="add-btn" style="background:#222;color:#d4af37;border:1px solid #d4af37" onclick="addToCart('Vacío completo',19000)">COMPLETO</button></div></div>
+    <div class="product-card">
+      <div class="product-details">
+        <div class="product-name">Entraña c/ Fritas (Sola)</div>
+        <div class="product-price">$32.000</div>
+      </div>
+      <div class="qty-controls">
+        <button class="btn-qty" onclick="changeQty('entrana_sola', -1)">-</button>
+        <span class="qty-count" id="qty-entrana_sola">0</span>
+        <button class="btn-qty" onclick="changeQty('entrana_sola', 1)">+</button>
+      </div>
+    </div>
 
-<div class="card"><div class="card-body"><h3>BONDIOLA SOLO/COMPLETA</h3><p>$13.000 / $16.500</p><button class="add-btn" onclick="addToCart('Bondiola solo',13000)">SOLO</button><button class="add-btn" style="background:#222;color:#d4af37;border:1px solid #d4af37" onclick="addToCart('Bondiola completa',16500)">COMPLETA</button></div></div>
+    <div class="product-card">
+      <div class="product-details">
+        <div class="product-name">Entraña c/ Fritas (Entera)</div>
+        <div class="product-price">$34.000</div>
+      </div>
+      <div class="qty-controls">
+        <button class="btn-qty" onclick="changeQty('entrana_entera', -1)">-</button>
+        <span class="qty-count" id="qty-entrana_entera">0</span>
+        <button class="btn-qty" onclick="changeQty('entrana_entera', 1)">+</button>
+      </div>
+    </div>
 
-<div class="card"><div class="card-body"><h3>BEBIDAS Y POSTRES</h3><p style="font-size:0.8rem;color:#aaa">Bebidas $3500 a $11000 - Postres $4000-$4500</p><button class="add-btn" onclick="addToCart('Bebida/Postre (aclarar)',0)">AGREGAR (aclarar en WhatsApp)</button></div></div>
+    <div class="product-card">
+      <div class="product-details">
+        <div class="product-name">Mini Bife de Chorizo c/ Fritas</div>
+        <div class="product-price">$20.000</div>
+      </div>
+      <div class="qty-controls">
+        <button class="btn-qty" onclick="changeQty('mini_bife', -1)">-</button>
+        <span class="qty-count" id="qty-mini_bife">0</span>
+        <button class="btn-qty" onclick="changeQty('mini_bife', 1)">+</button>
+      </div>
+    </div>
 
-</div>
-</div>
+    <div class="product-card">
+      <div class="product-details">
+        <div class="product-name">Bife de Costilla c/ Fritas</div>
+        <div class="product-price">$17.000</div>
+      </div>
+      <div class="qty-controls">
+        <button class="btn-qty" onclick="changeQty('bife_costilla', -1)">-</button>
+        <span class="qty-count" id="qty-bife_costilla">0</span>
+        <button class="btn-qty" onclick="changeQty('bife_costilla', 1)">+</button>
+      </div>
+    </div>
 
-<div id="cart">
-<h3 style="color:#d4af37">🛒 Tu Pedido</h3>
-<div id="cart-items"><p style="color:#777">Vacío</p></div>
-<div class="total">Total: $<span id="cart-total">0</span></div>
-<button class="wa-btn" onclick="sendWhatsApp()">ENVIAR POR WHATSAPP</button>
-</div>
+    <div class="product-card">
+      <div class="product-details">
+        <div class="product-name">Bondiola c/ Fritas</div>
+        <div class="product-price">$18.000</div>
+      </div>
+      <div class="qty-controls">
+        <button class="btn-qty" onclick="changeQty('bondiola_fritas', -1)">-</button>
+        <span class="qty-count" id="qty-bondiola_fritas">0</span>
+        <button class="btn-qty" onclick="changeQty('bondiola_fritas', 1)">+</button>
+      </div>
+    </div>
 
-<script>
-let cart=[];
-function addToCart(name,price){cart.push({name,price});renderCart()}
-function renderCart(){
-  let html='';let total=0;
-  cart.forEach((it,i)=>{total+=it.price;html+=`<div class="cart-item"><span>${it.name}</span><span>$${it.price} <a href="#" onclick="removeItem(${i});return false" style="color:red">x</a></span></div>`});
-  document.getElementById('cart-items').innerHTML=html||'<p style="color:#777">Vacío</p>';
-  document.getElementById('cart-total').textContent=total;
-  document.getElementById('cart-count').textContent=cart.length;
-}
-function removeItem(i){cart.splice(i,1);renderCart()}
-function sendWhatsApp(){
-  if(!cart.length){alert('Agrega items');return}
-  let msg='Hola La Perseverancia! Quiero pedir:%0A';let total=0;
-  cart.forEach(it=>{msg+=`- ${it.name} $${it.price}%0A`;total+=it.price});
-  msg+=`%0ATotal: $${total}%0ADirección: `;
-  window.open('https://wa.me/5491156598000?text='+msg,'_blank');
-}
-</script>
+    <div class="product-card">
+      <div class="product-details">
+        <div class="product-name">Chorizo</div>
+        <div class="product-price">$6.500</div>
+      </div>
+      <div class="qty-controls">
+        <button class="btn-qty" onclick="changeQty('chorizo', -1)">-</button>
+        <span class="qty-count" id="qty-chorizo">0</span>
+        <button class="btn-qty" onclick="changeQty('chorizo', 1)">+</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-details">
+        <div class="product-name">Morcilla</div>
+        <div class="product-price">$6.000</div>
+      </div>
+      <div class="qty-controls">
+        <button class="btn-qty" onclick="changeQty('morcilla', -1)">-</button>
+        <span class="qty-count" id="qty-morcilla">0</span>
+        <button class="btn-qty" onclick="changeQty('morcilla', 1)">+</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-details">
+        <div class="product-name">Parrillada para 2</div>
+        <div class="product-price">$59.000</div>
+      </div>
+      <div class="qty-controls">
+        <button class="btn-qty" onclick="changeQty('parrillada_2', -1)">-</button>
+        <span class="qty-count" id="qty-parrillada_2">0</span>
+        <button class="btn-qty" onclick="changeQty('parrillada_2', 1)">+</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-details">
+        <div class="product-name">Riñones (1/2 porción)</div>
+        <div class="product-price">$10.800</div>
+      </div>
+      <div class="qty-controls">
+        <button class="btn-qty" onclick="changeQty('rinones_medio', -1)">-</button>
+        <span class="qty-count" id="qty-rinones_medio">0</span>
+        <button class="btn-qty" onclick="changeQty('rinones_medio', 1)">+</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-details">
+        <div class="product-name">Riñones (Porción entera)</div>
+        <div class="product-price">$13.000</div>
+      </div>
+      <div class="qty-controls">
+        <button class="btn-qty" onclick="changeQty('rinones_entero', -1)">-</button>
+        <span class="qty-count" id="qty-rinones_entero">0</span>
+        <button class="btn-qty" onclick="changeQty('rinones_entero', 1)">+</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-details">
+        <div class="product-name">Chinchulines (1/2 porción)</div>
+        <div class="product-price">$10.500</div>
+      </div>
+      <div class="qty-controls">
+        <button class="btn-qty" onclick="changeQty('chinchu_medio', -1)">-</button>
+        <span class="qty-count" id="qty-chinchu_medio">0</span>
+        <button class="btn-qty" onclick="changeQty('chinchu_medio', 1)">+</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-details">
+        <div class="product-name">Chinchulines (Porción entera)</div>
+        <div class="product-price">$12.000</div>
+      </div>
+      <div class="qty-controls">
+        <button class="btn-qty" onclick="changeQty('chinchu_entero', -1)">-</button>
+        <span class="qty-count" id="qty-chinchu_entero">0</span>
+        <button class="btn-qty" onclick="changeQty('chinchu_entero', 1)">+</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-details">
+        <div class="product-name">1/4 de Pollo c/ Fritas</div>
+        <div class="product-price">$12.000</div>
+      </div>
+      <div class="qty-controls">
+        <button class="btn-qty" onclick="changeQty('cuarto_pollo', -1)">-</button>
+        <span class="qty-count" id="qty-cuarto_pollo">0</span>
+        <button class="btn-qty" onclick="changeQty('cuarto_pollo', 1)">+</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-details">
+        <div class="product-name">Pollo Entero (Solo para llevar)</div>
+        <div class="product-price">$33.000</div>
+      </div>
+      <div class="qty-controls">
+        <button class="btn-qty" onclick="changeQty('pollo_entero_solo', -1)">-</button>
+        <span class="qty-count" id="qty-pollo_entero_solo">0</span>
+        <button class="btn-qty" onclick="changeQty('pollo_entero_solo', 1)">+</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-details">
+        <div class="product-name">Pollo Entero c/ Fritas (Solo llevar)</div>
+        <div class="product-price">$38.000</div>
+      </div>
+      <div class="qty-controls">
+        <button class="btn-qty" onclick="changeQty('pollo_entero_fritas', -1)">-</button>
+        <span class="qty-count" id="qty-pollo_entero_fritas">0</span>
+        <button class="btn-qty" onclick="changeQty('pollo_entero_fritas', 1)">+</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-details">
+        <div class="product-name">Provoleta</div>
+        <div class="product-price">$13.000</div>
+      </div>
+      <div class="qty-controls">
+        <button class="btn-qty" onclick="changeQty('provoleta', -1)">-</button>
+        <span class="qty-count" id="qty-provoleta">0</span>
+        <button class="btn-qty" onclick="changeQty('provoleta', 1)">+</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-details">
+        <div class="product-name">Frita Chica</div>
+        <div class="product-price">$8.000</div>
+      </div>
+      <div class="qty-controls">
+        <button class="btn-qty" onclick="changeQty('frita_chica', -1)">-</button>
+        <span class="qty-count" id="qty-frita_chica">0</span>
+        <button class="btn-qty" onclick="changeQty('frita_chica', 1)">+</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-details">
+        <div class="product-name">Fritas Grandes</div>
+        <div class="product-price">$9.000</div>
+      </div>
+      <div class="qty-controls">
+        <button class="btn-qty" onclick="changeQty('fritas_grandes', -1)">-</button>
+        <span class="qty-count" id="qty-fritas_grandes">0</span>
+        <button class="btn-qty" onclick="changeQty('fritas_grandes', 1)">+</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-details">
+        <div class="product-name">Fritas Gigantes</div>
+        <div class="product-price">$12.000</div>
+      </div>
+      <div class="qty-controls">
+        <button class="btn-qty" onclick="changeQty('fritas_gigantes', -1)">-</button>
+        <span class="qty-count" id="qty-fritas_gigantes">0</span>
+        <button class="btn-qty" onclick="changeQty('fritas_gigantes', 1)">+</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MINUTAS -->
+  <div id="minutas">
+    <h2 class="section-title">MINUTAS</h2>
+
+    <div class="product-card">
+      <div class="product-details">
+        <div class="product-name">Milanesa c/ Fritas</div>
+        <div class="product-price">$14.500</div>
+      </div>
+      <div class="qty-controls">
+        <button class="btn-qty" onclick="changeQty('mila_fritas', -1)">-</button>
+        <span class="qty-count" id="qty-mila_fritas">0</span>
+        <button class="btn-qty" onclick="changeQty('mila_fritas', 1)">+</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-details">
+        <div class="product-name">Milanesa c/ Fritas y 2 Huevos</div>
+        <div class="product-price">$22.000</div>
+      </div>
+      <div class="qty-controls">
+        <button class="btn-qty" onclick="changeQty('mila_fritas_huevos', -1)">-</button>
+        <span class="qty-count" id="qty-mila_fritas_huevos">0</span>
+        <button class="btn-qty" onclick="changeQty('mila_fritas_huevos', 1)">+</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-details">
+        <div class="product-name">Milanesa Napolitana c/ Fritas</div>
+        <div class="product-price">$18.000</div>
+      </div>
+      <div class="qty-controls">
+        <button class="btn-qty" onclick="changeQty('mila_napo', -1)">-</button>
+        <span class="qty-count" id="qty-mila_napo">0</span>
+        <button class="btn-qty" onclick="changeQty('mila_napo', 1)">+</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-details">
+        <div class="product-name">Suprema c/ Fritas</div>
+        <div class="product-price">$14.000</div>
+      </div>
+      <div class="qty-controls">
+        <button class="btn-qty" onclick="changeQty('suprema_fritas', -1)">-</button>
+        <span class="qty-count" id="qty-suprema_fritas">0</span>
+        <button class="btn-qty" onclick="changeQty('suprema_fritas', 1)">+</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-details">
+        <div class="product-name">Suprema c/ Fritas y 2 Huevos</div>
+        <div class="product-price">$19.000</div>
+      </div>
+      <div class="qty-controls">
+        <button class="btn-qty" onclick="changeQty('suprema_fritas_huevos', -1)">-</button>
+        <span class="qty-count" id="qty-suprema_fritas_huevos">0</span>
+        <button class="btn-qty" onclick="changeQty('suprema_fritas_huevos', 1)">+</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-details">
+        <div class="product-name">Suprema Napolitana c/ Fritas</div>
+        <div class="product-price">$18.000</div>
+      </div>
+      <div class="qty-controls">
+        <button class="btn-qty" onclick="changeQty('suprema_napo', -1)">-</button>
+        <span class="qty-count" id="qty-suprema_napo">0</span>
+        <button class="btn-qty" onclick="changeQty('suprema_napo', 1)">+</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-details">
+        <div class="product-name">Pechuga Grillé c/ Fritas</div>
+        <div class="product-price">$15.000</div>
+      </div>
+      <div class="qty-controls">
+        <button class="btn-qty" onclick="changeQty('pechuga_grille', -1)">-</button>
+        <span class="qty-count" id="qty-pechuga_grille">0</span>
+        <button class="btn-qty" onclick="changeQty('pechuga_grille', 1)">+</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-details">
+        <div class="product-name">Tortilla de Papas</div>
+        <div class="product-price">$9.000</div>
+      </div>
+      <div class="qty-controls">
+        <button class="btn-qty" onclick="changeQty('tortilla_papas', -1)">-</button>
+        <span class="qty-count" id="qty-tortilla_papas">0</span>
+        <button class="btn-qty" onclick="changeQty('tortilla_papas', 1)">+</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-details">
+        <div class="product-name">Buñuelo de Acelga</div>
+        <div class="product-price">$1.800</div>
+      </div>
+      <div class="qty-controls">
+        <button class="btn-qty" onclick="changeQty('bunuelo_acelga', -1)">-</button>
+        <span class="qty-count" id="qty-bunuelo_acelga">0</span>
+        <button class="btn-qty" onclick="changeQty('bunuelo_acelga', 1)">+</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SÁNDWICHES -->
+  <div id="sandwiches">
+    <h2 class="section-title">SÁNDWICHES</h2>
+
+    <div class="product-card"><div class="product-details"><div class="product-name">Choripán</div><div class="product-price">$6.500</div></div><div class="qty-controls"><button class="btn-qty" onclick="changeQty('s_choripan', -1)">-</button><span class="qty-count" id="qty-s_choripan">0</span><button class="btn-qty" onclick="changeQty('s_choripan', 1)">+</button></div></div>
+    <div class="product-card"><div class="product-details"><div class="product-name">Morcipán</div><div class="product-price">$6.000</div></div><div class="qty-controls"><button class="btn-qty" onclick="changeQty('s_morcipan', -1)">-</button><span class="qty-count" id="qty-s_morcipan">0</span><button class="btn-qty" onclick="changeQty('s_morcipan', 1)">+</button></div></div>
+    
+    <!-- VACIO -->
+    <div class="product-card"><div class="product-details"><div class="product-name">Vacío - Solo</div><div class="product-price">$15.000</div></div><div class="qty-controls"><button class="btn-qty" onclick="changeQty('s_vacio_solo', -1)">-</button><span class="qty-count" id="qty-s_vacio_solo">0</span><button class="btn-qty" onclick="changeQty('s_vacio_solo', 1)">+</button></div></div>
+    <div class="product-card"><div class="product-details"><div class="product-name">Vacío - Lechuga y Tomate</div><div class="product-price">$16.000</div></div><div class="qty-controls"><button class="btn-qty" onclick="changeQty('s_vacio_lt', -1)">-</button><span class="qty-count" id="qty-s_vacio_lt">0</span><button class="btn-qty" onclick="changeQty('s_vacio_lt', 1)">+</button></div></div>
+    <div class="product-card"><div class="product-details"><div class="product-name">Vacío - Jamón y Queso</div><div class="product-price">$17.000</div></div><div class="qty-controls"><button class="btn-qty" onclick="changeQty('s_vacio_jq', -1)">-</button><span class="qty-count" id="qty-s_vacio_jq">0</span><button class="btn-qty" onclick="changeQty('s_vacio_jq', 1)">+</button></div></div>
+    <div class="product-card"><div class="product-details"><div class="product-name">Vacío - Lechuga, Tomate, Jamón y Queso</div><div class="product-price">$18.000</div></div><div class="qty-controls"><button class="btn-qty" onclick="changeQty('s_vacio_ltjq', -1)">-</button><span class="qty-count" id="qty-s_vacio_ltjq">0</span><button class="btn-qty" onclick="changeQty('s_vacio_ltjq', 1)">+</button></div></div>
+    <div class="product-card"><div class="product-details"><div class="product-name">Vacío Completo (L, T, J, Q y Huevo)</div><div class="product-price">$19.000</div></div><div class="qty-controls"><button class="btn-qty" onclick="changeQty('s_vacio_comp', -1)">-</button><span class="qty-count" id="qty-s_vacio_comp">0</span><button class="btn-qty" onclick="changeQty('s_vacio_comp', 1)">+</button></div></div>
+
+    <!-- BONDIOLA -->
+    <div class="product-card"><div class="product-details"><div class="product-name">Bondiola - Sola</div><div class="product-price">$13.000</div></div><div class="qty-controls"><button class="btn-qty" onclick="changeQty('s_bon_solo', -1)">-</button><span class="qty-count" id="qty-s_bon_solo">0</span><button class="btn-qty" onclick="changeQty('s_bon_solo', 1)">+</button></div></div>
+    <div class="product-card"><div class="product-details"><div class="product-name">Bondiola - Lechuga y Tomate</div><div class="product-price">$13.500</div></div><div class="qty-controls"><button class="btn-qty" onclick="changeQty('s_bon_lt', -1)">-</button><span class="qty-count" id="qty-s_bon_lt">0</span><button class="btn-qty" onclick="changeQty('s_bon_lt', 1)">+</button></div></div>
+    <div class="product-card"><div class="product-details"><div class="product-name">Bondiola - Jamón y Queso</div><div class="product-price">$14.000</div></div><div class="qty-controls"><button class="btn-qty" onclick="changeQty('s_bon_jq', -1)">-</button><span class="qty-count" id="qty-s_bon_jq">0</span><button class="btn-qty" onclick="changeQty('s_bon_jq', 1)">+</button></div></div>
+    <div class="product-card"><div class="product-details"><div class="product-name">Bondiola - Lechuga, Tomate, Jamón y Queso</div><div class="product-price">$15.000</div></div><div class="qty-controls"><button class="btn-qty" onclick="changeQty('s_bon_ltjq', -1)">-</button><span class="qty-count" id="qty-s_bon_ltjq">0</span><button class="btn-qty" onclick="changeQty('s_bon_ltjq', 1)">+</button></div></div>
+    <div class="product-card"><div class="product-details"><div class="product-name">Bondiola Completa (L, T, J, Q y Huevo)</div><div class="product-price">$16.500</div></div><div class="qty-controls"><button class="btn-qty" onclick="changeQty('s_bon_comp', -1)">-</button><span class="qty-count" id="qty-s_bon_comp">0</span><button class="btn-qty" onclick="changeQty('s_bon_comp', 1)">+</button></div></div>
+
+    <!-- MILANESA -->
+    <div class="product-card"><div class="product-details"><div class="product-name">Milanesa - Sola</div><div class="product-price">$9.000</div></div><div class="qty-controls"><button class="btn-qty" onclick="changeQty('s_mila_solo', -1)">-</button><span class="qty-count" id="qty-s_mila_solo">0</span><button class="btn-qty" onclick="changeQty('s_mila_solo', 1)">+</button></div></div>
+    <div class="product-card"><div class="product-details"><div class="product-name">Milanesa - Lechuga y Tomate</div><div class="product-price">$9.500</div></div><div class="qty-controls"><button class="btn-qty" onclick="changeQty('s_mila_lt', -1)">-</button><span class="qty-count" id="qty-s_mila_lt">0</span><button class="btn-qty" onclick="changeQty('s_mila_lt', 1)">+</button></div></div>
+    <div class="product-card"><div class="product-details"><div class="product-name">Milanesa - Jamón y Queso</div><div class="product-price">$10.000</div></div><div class="qty-controls"><button class="btn-qty" onclick="changeQty('s_mila_jq', -1)">-</button><span class="qty-count" id="qty-s_mila_jq">0</span><button class="btn-qty" onclick="changeQty('s_mila_jq', 1)">+</button></div></div>
+    <div class="product-card"><div class="product-details"><div class="product-name">Milanesa - Lechuga, Tomate, Jamón y Queso</div><div class="product-price">$11.000</div></div><div class="qty-controls"><button class="btn-qty" onclick="changeQty('s_mila_ltjq', -1)">-</button><span class="qty-count" id="qty-s_mila_ltjq">0</span><button class="btn-qty" onclick="changeQty('s_mila_ltjq', 1)">+</button></div></div>
+    <div class="product-card"><div class="product-details"><div class="product-name">Milanesa Completa (L, T, J, Q y Huevo)</div><div class="product-price">$12.500</div></div><div class="qty-controls"><button class="btn-qty" onclick="changeQty('s_mila_comp', -1)">-</button><span class="qty-count" id="qty-s_mila_comp">0</span><button class="btn-qty" onclick="changeQty('s_mila_comp', 1)">+</button></div></div>
+
+    <!-- GRILLÉ -->
+    <div class="product-card"><div class="product-details"><div class="product-name">Grillé - Solo</div><div class="product-price">$10.000</div></div><div class="qty-controls"><button class="btn-qty" onclick="changeQty('s_gri_solo', -1)">-</button><span class="qty-count" id="qty-s_gri_solo">0</span><button class="btn-qty" onclick="changeQty('s_gri_solo', 1)">+</button></div></div>
+    <div class="product-card"><div class="product-details"><div class="product-name">Grillé - Lechuga y Tomate</div><div class="product-price">$11.000</div></div><div class="qty-controls"><button class="btn-qty" onclick="changeQty('s_gri_lt', -1)">-</button><span class="qty-count" id="qty-s_gri_lt">0</span><button class="btn-qty" onclick="changeQty('s_gri_lt', 1)">+</button></div></div>
+    <div class="product-card"><div class="product-details"><div class="product-name">Grillé - Jamón y Queso</div><div class="product-price">$12.000</div></div><div class="qty-controls"><button class="btn-qty" onclick="changeQty('s_gri_jq', -1)">-</button><span class="qty-count" id="qty-s_gri_jq">0</span><button class="btn-qty" onclick="changeQty('s_gri_jq', 1)">+</button></div></div>
+    <div class="product-card"><div class="product-details"><div class="product-name">Grillé Completo (L, T, J, Q y Huevo)</div><div class="product-price">$13.500</div></div><div class="qty-controls"><button class="btn-qty" onclick="changeQty('s_gri_comp', -1)">-</button><span class="qty-count" id="qty-s_gri_comp">0</span><button class="btn-qty" onclick="changeQty('s_gri_comp', 1)">+</button></div></div>
+  </div>
+
+  <!-- ENSALADAS -->
+  <div id="ensaladas">
+    <h2 class="section-title">ENSALADAS</h2>
+
+    <div class="product-card"><div class="product-details"><div class="product-name">Mixta (L, T, C) Chica</div><div class="product-price">$5.000</div></div><div class="qty-controls"><button class="btn-qty" onclick="changeQty('ens_mix_ch', -1)">-</button><span class="qty-count" id="qty-ens_mix_ch">0</span><button class="btn-qty" onclick="changeQty('ens_mix_ch', 1)">+</button></div></div>
+    <div class="product-card"><div class="product-details"><div class="product-name">Mixta (L, T, C) Grande</div><div class="product-price">$7.000</div></div><div class="qty-controls"><button class="btn-qty" onclick="changeQty('ens_mix_gr', -1)">-</button><span class="qty-count" id="qty-ens_mix_gr">0</span><button class="btn-qty" onclick="changeQty('ens_mix_gr', 1)">+</button></div></div>
+    <div class="product-card"><div class="product-details"><div class="product-name">Zanahoria y Huevo Chica</div><div class="product-price">$4.000</div></div><div class="qty-controls"><button class="btn-qty" onclick="changeQty('ens_zh_ch', -1)">-</button><span class="qty-count" id="qty-ens_zh_ch">0</span><button class="btn-qty" onclick="changeQty('ens_zh_ch', 1)">+</button></div></div>
+    <div class="product-card"><div class="product-details"><div class="product-name">Zanahoria y Huevo Grande</div><div class="product-price">$6.000</div></div><div class="qty-controls"><button class="btn-qty" onclick="changeQty('ens_zh_gr', -1)">-</button><span class="qty-count" id="qty-ens_zh_gr">0</span><button class="btn-qty" onclick="changeQty('ens_zh_gr', 1)">+</button></div></div>
+    <div class="product-card"><div class="product-details"><div class="product-name">Rusa Chica</div><div class="product-price">$5.000</div></div><div class="qty-controls"><button class="btn-qty" onclick="changeQty('ens_rusa_ch', -1)">-</button><span class="qty-count" id="qty-ens_rusa_ch">0</span><button class="btn-qty" onclick="changeQty('ens_rusa_ch', 1)">+</button></div></div>
+    <div class="product-card"><div class="product-details"><div class="product-name">Rusa Grande</div><div class="product-price">$7.000</div></div><div class="qty-controls"><button class="btn-qty" onclick="changeQty('ens_rusa_gr', -1)">-</button><span class="qty-count" id="qty-ens_rusa_gr">0</span><button class="btn-qty" onclick="changeQty('ens_rusa_gr', 1)">+</button></div></div>
+  </div>
+
+  <!-- POSTRES -->
+  <div id="postres">
+    <h2 class="section-title">POSTRES</h2>
+
+    <div class="product-card"><div class="product-details"><div class="product-name">Flan Casero</div><div class="product-price">$4.000</div></div><div class="qty-controls"><button class="btn-qty" onclick="changeQty('flan', -1)">-</button><span class="qty-count" id="qty-flan">0</span><button class="btn-qty" onclick="changeQty('flan', 1)">+</button></div></div>
+    <div class="product-card"><div class="product-details"><div class="product-name">Flan c/ Dulce o Crema</div><div class="product-price">$4.800</div></div><div class="qty-controls"><button class="btn-qty" onclick="changeQty('flan_dc', -1)">-</button><span class="qty-count" id="qty-flan_dc">0</span><button class="btn-qty" onclick="changeQty('flan_dc', 1)">+</button></div></div>
+    <div class="product-card"><div class="product-details"><div class="product-name">Flan Mixto</div><div class="product-price">$5.500</div></div><div class="qty-controls"><button class="btn-qty" onclick="changeQty('flan_mixto', -1)">-</button><span class="qty-count" id="qty-flan_mixto">0</span><button class="btn-qty" onclick="changeQty('flan_mixto', 1)">+</button></div></div>
+    <div class="product-card"><div class="product-details"><div class="product-name">Budín de Pan</div><div class="product-price">$4.000</div></div><div class="qty-controls"><button class="btn-qty" onclick="changeQty('budin', -1)">-</button><span class="qty-count" id="qty-budin">0</span><button class="btn-qty" onclick="changeQty('budin', 1)">+</button></div></div>
+    <div class="product-card"><div class="product-details"><div class="product-name">Budín de Pan c/ Dulce o Crema</div><div class="product-price">$4.800</div></div><div class="qty-controls"><button class="btn-qty" onclick="changeQty('budin_dc', -1)">-</button><span class="qty-count" id="qty-budin_dc">0</span><button class="btn-qty" onclick="changeQty('budin_dc', 1)">+</button></div></div>
+    <div class="product-card"><div class="product-details"><div class="product-name">Budín de Pan Mixto</div><div class="product-price">$5.500</div></div><div class="qty-controls"><button class="btn-qty" onclick="changeQty('budin_mixto', -1)">-</button><span class="qty-count" id="qty-budin_mixto">0</span><button class="btn-qty" onclick="changeQty('budin_mixto', 1)">+</button></div></div>
+    <div class="product-card"><div class="product-details"><div class="product-name">Queso y Dulce (Vigilante)</div><div class="product-price">$5.000</div></div><div class="qty-controls"><button class="btn-qty" onclick="changeQty('vigilante', -1)">-</button><span class="qty-count" id="qty-vigilante">0</span><button class="btn-qty" onclick="changeQty('vigilante', 1)">+</button></div></div>
+  </div>
+
+  <!-- BEBIDAS -->
+  <div id="bebidas">
+    <h2 class="section-title">BEBIDAS</h2>
+
+    <div class="product-card"><div class="product-details"><div class="product-name">Gaseosa 500ml</div><div class="product-price">$2.500</div></div><div class="qty-controls"><button class="btn-qty" onclick="changeQty('gaseosa_500', -1)">-</button><span class="qty-count" id="qty-gaseosa_500">0</span><button class="btn-qty" onclick="changeQty('gaseosa_500', 1)">+</button></div></div>
+    <div class="product-card"><div class="product-details"><div class="product-name">Gaseosa 1.5L</div><div class="product-price">$4.500</div></div><div class="qty-controls"><button class="btn-qty" onclick="changeQty('gaseosa_15', -1)">-</button><span class="qty-count" id="qty-gaseosa_15">0</span><button class="btn-qty" onclick="changeQty('gaseosa_15', 1)">+</button></div></div>
+    <div class="product-card"><div class="product-details"><div class="product-name">Agua Mineral 500ml</div><div class="product-price">$2.000</div></div><div class="qty-controls"><button class="btn-qty" onclick="changeQty('agua_500', -1)">-</button><span class="qty-count" id="qty-agua_500">0</span><button class="btn-qty" onclick="changeQty('agua_500', 1)">+</button></div></div>
+    <div class="product-card"><div class="product-details"><div class="product-name">Cerveza 1L</div><div class="product-price">$5.000</div></div><div class="qty-controls"><button class="btn-qty" onclick="changeQty('cerveza_1l', -1)">-</button><span class="qty-count" id="qty-cerveza_1l">0</span><button class="btn-qty" onclick="changeQty('cerveza_1l', 1)">+</button></div></div>
+    <div class="product-card"><div class="product-details"><div class="product-name">Vino de la Casa</div><div class="product-price">$6.000</div></div><div class="qty-controls"><button class="btn-qty" onclick="changeQty('vino_casa', -1)">-</button><span class="qty-count" id="qty-vino_casa">0</span><button class="btn-qty" onclick="changeQty('vino_casa', 1)">+</button></div></div>
+  </div>
+
+  <!-- BOTTOM BAR -->
+  <div class="bottom-bar">
+    <div class="cart-info">
+      <span class="cart-title">Total Estimado</span>
+      <span class="cart-total" id="cart-total">$0</span>
+    </div>
+    <button class="checkout-btn" onclick="openModal()">Pedir por WhatsApp</button>
+  </div>
+
+  <!-- MODAL CHECKOUT -->
+  <div class="modal-overlay" id="checkout-modal">
+    <div class="modal-content">
+      <h2>Completa tu Pedido</h2>
+      
+      <div class="form-group">
+        <label>Tipo de Pedido</label>
+        <select id="order-type" onchange="toggleDeliveryAddress()">
+          <option value="Delivery">Delivery</option>
+          <option value="Para Llevar (Take Away)">Para Llevar (Take Away)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Nombre</label>
+        <input type="text" id="cust-name" placeholder="Tu nombre">
+      </div>
+
+      <div class="form-group" id="address-group">
+        <label>Dirección de Envío</label>
+        <input type="text" id="cust-address" placeholder="Ej: Calle Falsa 123, Depto 4B">
+      </div>
+
+      <div class="form-group">
+        <label>Método de Pago</label>
+        <select id="pay-method" onchange="toggleAlias()">
+          <option value="Efectivo">Efectivo</option>
+          <option value="Transferencia">Transferencia Mercado Pago</option>
+        </select>
+        <div class="alias-info" id="alias-box">
+          Alias para transferir: <strong>PARRILLA.LA.PERSEVERANCIA</strong>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Aclaraciones / Observaciones</label>
+        <input type="text" id="cust-notes" placeholder="Ej: Punto de la carne, sin cebolla, etc.">
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
+        <button class="btn-submit" onclick="sendWhatsApp()">Enviar Pedido</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const products = {
+      // PARRILLA
+      asado_medio: { name: "Asado c/ Fritas (1/2)", price: 25000 },
+      asado_entero: { name: "Asado c/ Fritas (Entero)", price: 28000 },
+      vacio_medio: { name: "Vacío c/ Fritas (1/2)", price: 29000 },
+      vacio_entero: { name: "Vacío c/ Fritas (Entero)", price: 32000 },
+      entrana_sola: { name: "Entraña c/ Fritas (Sola)", price: 32000 },
+      entrana_entera: { name: "Entraña c/ Fritas (Entera)", price: 34000 },
+      mini_bife: { name: "Mini Bife de Chorizo c/ Fritas", price: 20000 },
+      bife_costilla: { name: "Bife de Costilla c/ Fritas", price: 17000 },
+      bondiola_fritas: { name: "Bondiola c/ Fritas", price: 18000 },
+      chorizo: { name: "Chorizo", price: 6500 },
+      morcilla: { name: "Morcilla", price: 6000 },
+      parrillada_2: { name: "Parrillada para 2", price: 59000 },
+      rinones_medio: { name: "Riñones (1/2 porción)", price: 10800 },
+      rinones_entero: { name: "Riñones (Porción entera)", price: 13000 },
+      chinchu_medio: { name: "Chinchulines (1/2 porción)", price: 10500 },
+      chinchu_entero: { name: "Chinchulines (Porción entera)", price: 12000 },
+      cuarto_pollo: { name: "1/4 de Pollo c/ Fritas", price: 12000 },
+      pollo_entero_solo: { name: "Pollo Entero (Solo llevar)", price: 33000 },
+      pollo_entero_fritas: { name: "Pollo Entero c/ Fritas (Solo llevar)", price: 38000 },
+      provoleta: { name: "Provoleta", price: 13000 },
+      frita_chica: { name: "Frita Chica", price: 8000 },
+      fritas_grandes: { name: "Fritas Grandes", price: 9000 },
+      fritas_gigantes: { name: "Fritas Gigantes", price: 12000 },
+
+      // MINUTAS
+      mila_fritas: { name: "Milanesa c/ Fritas", price: 14500 },
+      mila_fritas_huevos: { name: "Milanesa c/ Fritas y 2 Huevos", price: 22000 },
+      mila_napo: { name: "Milanesa Napolitana c/ Fritas", price: 18000 },
+      suprema_fritas: { name: "Suprema c/ Fritas", price: 14000 },
+      suprema_fritas_huevos: { name: "Suprema c/ Fritas y 2 Huevos", price: 19000 },
+      suprema_napo: { name: "Suprema Napolitana c/ Fritas", price: 18000 },
+      pechuga_grille: { name: "Pechuga Grillé c/ Fritas", price: 15000 },
+      tortilla_papas: { name: "Tortilla de Papas", price: 9000 },
+      bunuelo_acelga: { name: "Buñuelo de Acelga", price: 1800 },
+
+      // SANDWICHES
+      s_choripan: { name: "Sándwich Choripán", price: 6500 },
+      s_morcipan: { name: "Sándwich Morcipán", price: 6000 },
+      s_vacio_solo: { name: "Sándwich Vacío Solo", price: 15000 },
+      s_vacio_lt: { name: "Sándwich Vacío L y T", price: 16000 },
+      s_vacio_jq: { name: "Sándwich Vacío J y Q", price: 17000 },
+      s_vacio_ltjq: { name: "Sándwich Vacío L, T, J, Q", price: 18000 },
+      s_vacio_comp: { name: "Sándwich Vacío Completo", price: 19000 },
+      s_bon_solo: { name: "Sándwich Bondiola Sola", price: 13000 },
+      s_bon_lt: { name: "Sándwich Bondiola L y T", price: 13500 },
+      s_bon_jq: { name: "Sándwich Bondiola J y Q", price: 14000 },
+      s_bon_ltjq: { name: "Sándwich Bondiola L, T, J, Q", price: 15000 },
+      s_bon_comp: { name: "Sándwich Bondiola Completo", price: 16500 },
+      s_mila_solo: { name: "Sándwich Milanesa Sola", price: 9000 },
+      s_mila_lt: { name: "Sándwich Milanesa L y T", price: 9500 },
+      s_mila_jq: { name: "Sándwich Milanesa J y Q", price: 10000 },
+      s_mila_ltjq: { name: "Sándwich Milanesa L, T, J, Q", price: 11000 },
+      s_mila_comp: { name: "Sándwich Milanesa Completo", price: 12500 },
+      s_gri_solo: { name: "Sándwich Grillé Solo", price: 10000 },
+      s_gri_lt: { name: "Sándwich Grillé L y T", price: 11000 },
+      s_gri_jq: { name: "Sándwich Grillé J y Q", price: 12000 },
+      s_gri_comp: { name: "Sándwich Grillé Completo", price: 13500 },
+
+      // ENSALADAS
+      ens_mix_ch: { name: "Ensalada Mixta Chica", price: 5000 },
+      ens_mix_gr: { name: "Ensalada Mixta Grande", price: 7000 },
+      ens_zh_ch: { name: "Ensalada Zanahoria y Huevo Chica", price: 4000 },
+      ens_zh_gr: { name: "Ensalada Zanahoria y Huevo Grande", price: 6000 },
+      ens_rusa_ch: { name: "Ensalada Rusa Chica", price: 5000 },
+      ens_rusa_gr: { name: "Ensalada Rusa Grande", price: 7000 },
+
+      // POSTRES
+      flan: { name: "Flan Casero", price: 4000 },
+      flan_dc: { name: "Flan c/ Dulce o Crema", price: 4800 },
+      flan_mixto: { name: "Flan Mixto", price: 5500 },
+      budin: { name: "Budín de Pan", price: 4000 },
+      budin_dc: { name: "Budín de Pan c/ Dulce o Crema", price: 4800 },
+      budin_mixto: { name: "Budín de Pan Mixto", price: 5500 },
+      vigilante: { name: "Queso y Dulce (Vigilante)", price: 5000 },
+
+      // BEBIDAS
+      gaseosa_500: { name: "Gaseosa 500ml", price: 2500 },
+      gaseosa_15: { name: "Gaseosa 1.5L", price: 4500 },
+      agua_500: { name: "Agua Mineral 500ml", price: 2000 },
+      cerveza_1l: { name: "Cerveza 1L", price: 5000 },
+      vino_casa: { name: "Vino de la Casa", price: 6000 }
+    };
+
+    const cart = {};
+
+    function changeQty(id, delta) {
+      if (!cart[id]) cart[id] = 0;
+      cart[id] += delta;
+      if (cart[id] < 0) cart[id] = 0;
+      
+      const el = document.getElementById(`qty-${id}`);
+      if (el) el.innerText = cart[id];
+      
+      updateTotal();
+    }
+
+    function updateTotal() {
+      let total = 0;
+      for (const id in cart) {
+        if (cart[id] > 0) {
+          total += cart[id] * products[id].price;
+        }
+      }
+      document.getElementById('cart-total').innerText = `$${total.toLocaleString('es-AR')}`;
+    }
+
+    function openModal() {
+      let total = 0;
+      for (const id in cart) total += cart[id];
+      if (total === 0) {
+        alert("Por favor, agrega al menos un producto al pedido.");
+        return;
+      }
+      document.getElementById('checkout-modal').style.display = 'flex';
+      toggleDeliveryAddress();
+    }
+
+    function closeModal() {
+      document.getElementById('checkout-modal').style.display = 'none';
+    }
+
+    function toggleDeliveryAddress() {
+      const type = document.getElementById('order-type').value;
+      const addrGroup = document.getElementById('address-group');
+      if (type === 'Delivery') {
+        addrGroup.style.display = 'block';
+      } else {
+        addrGroup.style.display = 'none';
+      }
+    }
+
+    function toggleAlias() {
+      const method = document.getElementById('pay-method').value;
+      const aliasBox = document.getElementById('alias-box');
+      if (method === 'Transferencia') {
+        aliasBox.style.display = 'block';
+      } else {
+        aliasBox.style.display = 'none';
+      }
+    }
+
+    function sendWhatsApp() {
+      const name = document.getElementById('cust-name').value.trim();
+      const orderType = document.getElementById('order-type').value;
+      const address = document.getElementById('cust-address').value.trim();
+      const payMethod = document.getElementById('pay-method').value;
+      const notes = document.getElementById('cust-notes').value.trim();
+
+      if (!name) {
+        alert("Por favor ingresa tu nombre.");
+        return;
+      }
+
+      if (orderType === 'Delivery' && !address) {
+        alert("Por favor ingresa la dirección de envío para el Delivery.");
+        return;
+      }
+
+      let text = `*NUEVO PEDIDO - PARRILLA LA PERSEVERANCIA*\n`;
+      text += `------------------------------------\n`;
+      text += `👤 *Cliente:* ${name}\n`;
+      text += `📍 *Modalidad:* ${orderType}\n`;
+      if (orderType === 'Delivery') {
+        text += `🏠 *Dirección:* ${address}\n`;
+      }
+      text += `💳 *Pago:* ${payMethod}\n`;
+      if (notes) text += `📝 *Notas:* ${notes}\n`;
+      text += `------------------------------------\n`;
+      text += `*DETALLE DEL PEDIDO:*\n`;
+
+      let total = 0;
+      for (const id in cart) {
+        if (cart[id] > 0) {
+          const itemTotal = cart[id] * products[id].price;
+          total += itemTotal;
+          text += `• ${cart[id]}x ${products[id].name} - $${itemTotal.toLocaleString('es-AR')}\n`;
+        }
+      }
+
+      text += `------------------------------------\n`;
+      text += `💰 *TOTAL ESTIMADO:* $${total.toLocaleString('es-AR')}\n`;
+
+      const phone = "1140434137";
+      const url = `https://wa.me/549${phone}?text=${encodeURIComponent(text)}`;
+      window.open(url, '_blank');
+    }
+  </script>
 </body>
-</html>
+</html>﻿
