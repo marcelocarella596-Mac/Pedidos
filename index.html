@@ -1,25 +1,31 @@
-<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"><title>Parrilla La Perseverancia - Av Argentina 5801</title>
+<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Parrilla La Perseverancia - Av Argentina 5801</title>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
-<style>:root{--y:#ffc107;--g:#25d366;--bg:#0f0f0f}*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system}body{background:var(--bg);color:#fff;padding-bottom:110px;overflow-x:hidden}
-/* BANNER CENTRADO CHICO EN OVERLAY - YA NO OCUPA TODO */
-.banner-top{display:flex;justify-content:center;background:#0a0a0a;padding:10px}.banner-top img{width:92%;max-width:390px;height:auto;object-fit:contain;border-radius:14px;border:1px solid #2a2a2a;box-shadow:0 4px 20px rgba(0,0,0,.6)}
-/* NAV CATEGORIAS - FIX PINTADO */
-.nav{display:flex;gap:6px;padding:10px;overflow-x:auto;background:var(--bg);position:sticky;top:0;z-index:20;border-bottom:1px solid #222;scrollbar-width:none}.nav::-webkit-scrollbar{display:none}
-.pill{background:#222;color:#aaa;padding:9px 14px;border-radius:22px;font-size:11px;font-weight:800;white-space:nowrap;border:1.5px solid #333;text-decoration:none;cursor:pointer;transition:.2s;user-select:none}
-.pill.a,.pill.active{background:var(--y)!important;color:#000!important;border-color:var(--y)!important;box-shadow:0 2px 10px rgba(255,193,7,.5);transform:scale(1.05)}
-.sug{padding:12px 10px}.t{font-size:12px;font-weight:900;color:var(--y);margin-bottom:8px;display:flex;justify-content:space-between}
-.grid-h{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}.grid-h::-webkit-scrollbar{display:none}
-.card-h{min-width:132px;background:#1a1a1a;border-radius:12px;overflow:hidden;border:1px solid #2a2a2a;flex-shrink:0}.card-h img{width:100%;height:88px;object-fit:cover}
-.b{padding:7px}.n{font-size:11px;font-weight:700;height:26px;line-height:1.2;overflow:hidden}.p{color:var(--y);font-weight:800;font-size:12px}.ad{width:100%;margin-top:5px;background:var(--y);border:none;padding:6px;border-radius:7px;font-weight:800;font-size:11px;color:#000}
-.h{margin:16px 8px 8px;padding:9px 12px;border-left:4px solid var(--y);background:linear-gradient(90deg,rgba(255,193,7,.15),transparent);display:flex;justify-content:space-between;align-items:center;border-radius:0 8px 8px 0}.h h2{font-size:12px}.h span{font-size:10px;background:#222;padding:3px 8px;border-radius:12px;color:#888}
-.g{display:grid;gap:6px;padding:0 8px;grid-template-columns:1fr 1fr}.it{background:#1a1a1a;border-radius:11px;padding:9px;border:1px solid #262626;border-left:3px solid #333;min-height:74px;display:flex;flex-direction:column;justify-content:space-between}.tp{display:flex;justify-content:space-between;gap:6px}.nm{font-size:11.5px;font-weight:600;flex:1;line-height:1.15}.pr{font-size:11px;font-weight:800;color:var(--y);background:rgba(255,193,7,.12);padding:3px 6px;border-radius:6px;height:fit-content}.ds{font-size:9.5px;color:#777;margin-top:2px}.q{display:flex;justify-content:flex-end;margin-top:7px}.ct{display:flex;align-items:center;gap:6px;background:#111;border:1px solid #222;border-radius:20px;padding:2px 3px}.bq{width:22px;height:22px;border-radius:50%;border:none;background:var(--y);font-weight:900;font-size:14px;display:flex;align-items:center;justify-content:center}.cq{font-size:12px;font-weight:800;min-width:14px;text-align:center}
+<style>
+:root{--y:#ffc107;--bg:#0f0f0f}
+*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system}
+body{background:var(--bg);color:#fff;padding-bottom:110px;overflow-x:hidden}
+/* BANNER ESTIRADO FULL WIDTH - NO RECTANGULAR EN EL MEDIO */
+.banner-full{width:100%;height:210px;overflow:hidden;background:#000;position:relative}
+.banner-full img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
+/* NAV - FIX PINTADO */
+.nav{display:flex;gap:6px;padding:10px;overflow-x:auto;background:#0f0f0f;position:sticky;top:0;z-index:30;border-bottom:1px solid #222}
+.nav::-webkit-scrollbar{display:none}
+.pill{background:#222;color:#aaa;padding:9px 14px;border-radius:20px;font-size:11px;font-weight:800;white-space:nowrap;border:1.5px solid #333;text-decoration:none;transition:.15s;cursor:pointer}
+.pill.a,.pill.active{background:var(--y)!important;color:#000!important;border-color:var(--y)!important;box-shadow:0 2px 10px rgba(255,193,7,.4);transform:scale(1.05)}
+/* SECCIONES */
+.sug{padding:12px 10px}.t{font-size:12px;font-weight:900;color:var(--y);margin-bottom:8px}
+.grid-h{display:flex;gap:8px;overflow-x:auto}.grid-h::-webkit-scrollbar{display:none}
+.card-h{min-width:132px;background:#1a1a1a;border-radius:12px;overflow:hidden;border:1px solid #2a2a2a;flex-shrink:0}.card-h img{width:100%;height:86px;object-fit:cover;display:block}.b{padding:7px}.n{font-size:11px;font-weight:700;height:26px;overflow:hidden;line-height:1.2}.p{color:var(--y);font-weight:800;font-size:12px}.ad{width:100%;margin-top:5px;background:var(--y);border:none;padding:6px;border-radius:7px;font-weight:800;font-size:11px;color:#000}
+.h{margin:16px 8px 8px;padding:9px 12px;border-left:4px solid var(--y);background:#1c1c1c;border-radius:0 8px 8px 0;display:flex;justify-content:space-between}.h h2{font-size:12px}.h span{font-size:10px;background:#222;padding:3px 8px;border-radius:10px;color:#888}
+.g{display:grid;gap:6px;padding:0 8px;grid-template-columns:1fr 1fr}.it{background:#1a1a1a;border-radius:11px;padding:9px;border:1px solid #262626;border-left:3px solid #333;display:flex;flex-direction:column;justify-content:space-between;min-height:72px}.tp{display:flex;justify-content:space-between;gap:6px}.nm{font-size:11px;font-weight:600;flex:1;line-height:1.15}.pr{font-size:11px;font-weight:800;color:var(--y);background:rgba(255,193,7,.12);padding:3px 6px;border-radius:6px}.ds{font-size:9px;color:#777;margin-top:2px}.q{display:flex;justify-content:flex-end;margin-top:7px}.ct{display:flex;align-items:center;gap:6px;background:#111;border:1px solid #222;border-radius:20px;padding:2px 3px}.bq{width:22px;height:22px;border-radius:50%;border:none;background:var(--y);font-weight:900;font-size:14px;display:flex;align-items:center;justify-content:center}.cq{font-size:12px;font-weight:800;min-width:14px;text-align:center}
 .bar{position:fixed;bottom:0;left:0;right:0;background:#1a1a1a;padding:10px;border-top:1px solid #2a2a2a;z-index:100}.row{display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px}.tt{font-weight:900;color:var(--y);font-size:14px}.bt{width:100%;background:var(--y);color:#000;border:none;padding:14px;border-radius:12px;font-weight:900;font-size:14px}
-/* MODAL VALIDACION TOTAL */
-.ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:1000;align-items:flex-end;justify-content:center}.bx{background:#1e1e1e;padding:18px;border-radius:18px 18px 0 0;width:100%;max-width:480px;max-height:90vh;overflow-y:auto}.fg{margin-bottom:11px}.fg label{font-size:11px;font-weight:700;display:block;margin-bottom:4px;color:#ccc}.fg label b{color:#ff4444}.fg input,.fg select,.fg textarea{width:100%;padding:11px;border-radius:8px;border:1px solid #444;background:#2a2a2a;color:#fff;font-size:13px}.fg textarea{resize:none}.al{display:none;background:rgba(255,193,7,.12);border:1px dashed var(--y);padding:10px;border-radius:8px;margin-top:6px;font-size:12px}.err{font-size:10px;color:#ff6b6b;display:none;margin-top:3px}
+/* MODAL - SOLO 3 CAMPOS AHORA */
+.ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:1000;align-items:flex-end;justify-content:center}.bx{background:#1e1e1e;padding:18px;border-radius:18px 18px 0 0;width:100%;max-width:480px;max-height:90vh;overflow-y:auto}.fg{margin-bottom:12px}.fg label{font-size:11px;font-weight:700;display:block;margin-bottom:5px;color:#ccc}.fg label b{color:#ff4444}.fg input,.fg select,.fg textarea{width:100%;padding:12px;border-radius:9px;border:1px solid #444;background:#2a2a2a;color:#fff;font-size:13px}.fg textarea{resize:none}.al{display:none;background:rgba(255,193,7,.12);border:1px dashed var(--y);padding:10px;border-radius:8px;margin-top:6px;font-size:12px}.err{font-size:10px;color:#ff6b6b;display:none;margin-top:4px}
 </style></head><body>
 
-<div class="banner-top"><img src="parrilla_banner.jpeg" alt="Parrilla La Perseverancia"></div>
+<!-- BANNER ESTIRADO FULL WIDTH -->
+<div class="banner-full"><img src="parrilla_banner.jpeg" alt="Parrilla La Perseverancia - Av Argentina 5801"></div>
 
 <nav class="nav" id="navCat">
   <a class="pill a active" href="#sugerencias">🔥 SUGERENCIAS</a>
@@ -31,92 +37,90 @@
   <a class="pill" href="#bebidas">BEBIDAS</a>
 </nav>
 
-<div class="sug" id="sugerencias"><div class="t">SUGERENCIAS CON FOTO REAL <span style="color:#666;font-size:10px">Deslizá →</span></div><div class="grid-h">
-<div class="card-h"><img src="fideos_albondigas.jpg"><div class="b"><div class="n">Fideos con Albóndigas</div><div class="p">$14.000</div><button class="ad" onclick="chg('fideosAlbon',1)">+ Agregar</button></div></div>
-<div class="card-h"><img src="bife.jpg"><div class="b"><div class="n">Bife de Costilla c/ Fritas</div><div class="p">$17.000</div><button class="ad" onclick="chg('bifeCost',1)">+ Agregar</button></div></div>
-<div class="card-h"><img src="milanesa.jpg"><div class="b"><div class="n">Milanesa Gigante c/ Fritas</div><div class="p">$14.500</div><button class="ad" onclick="chg('mila',1)">+ Agregar</button></div></div>
-<div class="card-h"><img src="chuleta.jpg"><div class="b"><div class="n">Chuleta c/ 2 Huevos</div><div class="p">$22.000</div><button class="ad" onclick="chg('chuleta',1)">+ Agregar</button></div></div>
+<div class="sug" id="sugerencias"><div class="t">SUGERENCIAS CON FOTO REAL</div><div class="grid-h">
+<div class="card-h"><img src="fideos_albondigas.jpg" loading="lazy"><div class="b"><div class="n">Fideos con Albóndigas</div><div class="p">$14.000</div><button class="ad" onclick="chg('fideosAlbon',1)">+ Agregar</button></div></div>
+<div class="card-h"><img src="bife.jpg" loading="lazy"><div class="b"><div class="n">Bife Costilla c/ Fritas</div><div class="p">$17.000</div><button class="ad" onclick="chg('bifeCost',1)">+ Agregar</button></div></div>
+<div class="card-h"><img src="milanesa.jpg" loading="lazy"><div class="b"><div class="n">Milanesa Gigante c/ Fritas</div><div class="p">$14.500</div><button class="ad" onclick="chg('mila',1)">+ Agregar</button></div></div>
+<div class="card-h"><img src="chuleta.jpg" loading="lazy"><div class="b"><div class="n">Chuleta c/ 2 Huevos</div><div class="p">$22.000</div><button class="ad" onclick="chg('chuleta',1)">+ Agregar</button></div></div>
 </div></div>
 
-<div id="parrilla"><div class="h"><h2>🥩 PARRILLA - 18 ITEMS</h2><span>De tu PDF</span></div><div class="g" id="grid-parrilla"></div></div>
-<div id="minutas"><div class="h"><h2>🍳 MINUTAS - 9 ITEMS</h2></div><div class="g" id="grid-minutas"></div></div>
-<div id="ensaladas"><div class="h"><h2>🥗 ENSALADAS</h2></div><div class="g" id="grid-ensaladas"></div></div>
-<div id="postres"><div class="h"><h2>🍮 POSTRES</h2></div><div class="g" id="grid-postres"></div></div>
-<div id="sandwich"><div class="h"><h2>🥪 SANDWICH - VACIO / BONDIOLA / MILA</h2></div><div class="g" id="grid-sandwich"></div></div>
-<div id="bebidas"><div class="h"><h2>🥤 BEBIDAS / VINOS / CERVEZA</h2></div><div class="g" id="grid-bebidas"></div></div>
+<div id="parrilla"><div class="h"><h2>🥩 PARRILLA</h2><span>18 items</span></div><div class="g" id="grid-parrilla"></div></div>
+<div id="minutas"><div class="h"><h2>🍳 MINUTAS</h2><span>9 items</span></div><div class="g" id="grid-minutas"></div></div>
+<div id="ensaladas"><div class="h"><h2>🥗 ENSALADAS</h2><span>3 items</span></div><div class="g" id="grid-ensaladas"></div></div>
+<div id="postres"><div class="h"><h2>🍮 POSTRES</h2><span>5 items</span></div><div class="g" id="grid-postres"></div></div>
+<div id="sandwich"><div class="h"><h2>🥪 SANDWICH</h2><span>10 items</span></div><div class="g" id="grid-sandwich"></div></div>
+<div id="bebidas"><div class="h"><h2>🥤 BEBIDAS / VINOS / CERVEZA</h2><span>14 items</span></div><div class="g" id="grid-bebidas"></div></div>
 
 <div class="bar"><div class="row"><span id="cnt">0 productos</span><span class="tt" id="tot">$0</span></div><button class="bt" onclick="openM()">Pedir por WhatsApp - 11 4043-4137</button></div>
 
+<!-- MODAL SIMPLIFICADO SIN BARRIO Y SIN CELULAR -->
 <div class="ov" id="ov"><div class="bx">
-<h2 style="font-size:15px;margin-bottom:12px">Finalizar pedido - Completa todo *</h2>
+<h2 style="font-size:15px;margin-bottom:14px">Finalizar pedido - Completa todo *</h2>
 <div class="fg"><label>Nombre y apellido <b>*</b></label><input id="nn" placeholder="Ej: Juan Perez"><div class="err" id="err-nn">Falta nombre</div></div>
-<div class="fg"><label>Dirección completa <b>*</b></label><input id="dd" placeholder="Av. Argentina 5801 2B *"><div class="err" id="err-dd">Falta dirección</div></div>
-<div class="fg"><label>Barrio / Entre calles</label><input id="barrio" placeholder="Ej: Mataderos, San Pedrito y..."></div>
-<div class="fg"><label>WhatsApp / Celular <b>*</b></label><input id="tel" type="tel" placeholder="11 4043-4137 *"><div class="err" id="err-tel">Falta teléfono</div></div>
-<div class="fg"><label>Forma de pago <b>*</b></label><select id="pp" onchange="document.getElementById('al').style.display=this.value.includes('Transferencia')?'block':'none'"><option value="">Seleccionar... *</option><option>Efectivo</option><option>Transferencia - Alias: Av.argentina</option></select><div class="al" id="al"><b>Alias: Av.argentina - La Perseverancia</b><br><small>Enviar comprobante al mismo WhatsApp</small></div><div class="err" id="err-pp">Seleccioná pago</div></div>
-<div class="fg"><label>Notas para parrilla</label><textarea id="notas" rows="2" placeholder="Sin chimichurri, poco hecho..."></textarea></div>
-<div style="display:flex;gap:8px;margin-top:14px"><button onclick="closeM()" style="flex:1;padding:12px;border-radius:10px;background:#2a2a2a;color:#fff;border:1px solid #333">Cancelar</button><button onclick="send()" style="flex:2;padding:12px;border-radius:10px;background:#25d366;color:#fff;border:none;font-weight:800">Enviar Pedido</button></div>
+<div class="fg"><label>Dirección completa <b>*</b></label><input id="dd" placeholder="Ej: Av. Argentina 5801 2B"><div class="err" id="err-dd">Falta dirección</div></div>
+<div class="fg"><label>Forma de pago <b>*</b></label><select id="pp" onchange="document.getElementById('al').style.display=this.value.includes('Transferencia')?'block':'none'"><option value="">Seleccionar... *</option><option>Efectivo</option><option>Transferencia - Alias: Av.argentina</option></select><div class="al" id="al"><b>Alias: Av.argentina - Titular: La Perseverancia</b><br><small>Enviar comprobante al mismo WhatsApp 11 4043-4137</small></div><div class="err" id="err-pp">Seleccioná forma de pago</div></div>
+<div class="fg"><label>Notas para parrilla (opcional)</label><textarea id="notas" rows="2" placeholder="Ej: Sin chimichurri, poco hecho, timbre roto..."></textarea></div>
+<div style="display:flex;gap:8px;margin-top:16px"><button onclick="closeM()" style="flex:1;padding:12px;border-radius:10px;background:#2a2a2a;color:#fff;border:1px solid #333">Cancelar</button><button onclick="send()" style="flex:2;padding:12px;border-radius:10px;background:#25d366;color:#fff;border:none;font-weight:800;font-size:14px">Enviar Pedido</button></div>
 </div></div>
 
 <script>
-// FIREBASE - TU PROYECTO
-const firebaseConfig = {
-  apiKey: "AIzaSyB...REEMPLAZA_CON_TU_API_KEY",
-  databaseURL: "https://parrilla-la-perseverancia-f3f54-default-rtdb.firebaseio.com",
-  projectId: "parrilla-la-perseverancia-f3f54",
-};
+// FIREBASE
+const firebaseConfig={databaseURL:"https://parrilla-la-perseverancia-f3f54-default-rtdb.firebaseio.com",projectId:"parrilla-la-perseverancia-f3f54"};
 firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
+const db=firebase.database();
 
 // MENU COMPLETO DE TU PDF
 const prods={
-  asado12:{name:"Asado c/ Fritas 1/2",price:25000,cat:"parrilla",desc:"Entero $28.000"},
-  vacio12:{name:"Vacio c/ Fritas 1/2",price:29000,cat:"parrilla",desc:"Entero $32.000"},
-  entrana:{name:"Entraña c/ Fritas",price:32000,cat:"parrilla",desc:"Doble $34.000"},
-  miniBife:{name:"Mini Bife Chorizo c/ Fritas",price:20000,cat:"parrilla"},
-  bifeCost:{name:"Bife Costilla c/ Fritas",price:17000,cat:"parrilla"},
-  bondiola:{name:"Bondiola c/ Fritas",price:18000,cat:"parrilla"},
-  chori:{name:"Chorizo",price:6500,cat:"parrilla"},
-  morci:{name:"Morcilla",price:6000,cat:"parrilla"},
-  parri2:{name:"Parrillada p/ 2",price:59000,cat:"parrilla"},
-  rinones:{name:"Riñones 1/2",price:10800,cat:"parrilla",desc:"Entero $13.000"},
-  chinchu:{name:"Chinchulines 1/2",price:10500,cat:"parrilla",desc:"Entero $12.000"},
-  pollo14:{name:"1/4 Pollo c/ Fritas",price:12000,cat:"parrilla"},
-  fritasGiga:{name:"Fritas Gigantes",price:12000,cat:"parrilla"},
-  provo:{name:"Provoleta",price:13000,cat:"parrilla"},
-  polloEntero:{name:"Pollo Entero (llevar)",price:33000,cat:"parrilla"},
-  polloFrit:{name:"Pollo Entero c/ Fritas",price:38000,cat:"parrilla"},
-  fideosAlbon:{name:"Fideos con Albondigas",price:14000,cat:"sugerencias"},
-  mila:{name:"Milanesa c/ Fritas",price:14500,cat:"minutas"},
-  mila2h:{name:"Mila c/ Fritas y 2 Huevos",price:22000,cat:"minutas"},
-  milaNapo:{name:"Mila Napo c/ Fritas",price:18000,cat:"minutas"},
-  suprema:{name:"Suprema c/ Fritas",price:14000,cat:"minutas"},
-  suprema2h:{name:"Suprema c/ Fritas y 2 Huevos",price:19000,cat:"minutas"},
-  tortilla:{name:"Tortilla de Papas",price:9000,cat:"minutas"},
-  bunuelo:{name:"Buñuelo Acelga c/u",price:1800,cat:"minutas"},
-  pechuga:{name:"Pechuga Grille c/ Fritas",price:15000,cat:"minutas"},
-  chuleta:{name:"Chuleta c/ 2 Huevos",price:22000,cat:"minutas"},
-  mixtaCh:{name:"Mixta Chica",price:5000,cat:"ensaladas",desc:"Grande $7.000"},
-  zanahHuevo:{name:"Zanahoria-Huevo Ch",price:4000,cat:"ensaladas",desc:"Grande $7.000"},
-  ensalCompleta:{name:"Lechuga-Tom-Huevo-Zana Ch",price:8000,cat:"ensaladas",desc:"Grande $9.500"},
-  flan:{name:"Flan",price:8000,cat:"postres"},
-  budin:{name:"Budin de Pan",price:8000,cat:"postres"},
-  quesoDulce:{name:"Queso y Dulce",price:15000,cat:"postres"},
-  adicional:{name:"Adic. Crema/Dulce",price:2800,cat:"postres"},
-  ensalFruta:{name:"Ensalada de Fruta",price:8000,cat:"postres"},
-  choripan:{name:"Choripan",price:6500,cat:"sandwich"},
-  vacioSolo:{name:"Vacio Solo",price:15000,cat:"sandwich"},
-  vacioLT:{name:"Vacio Lech y Tomate",price:16000,cat:"sandwich"},
-  vacioComp:{name:"Vacio Completo",price:18000,cat:"sandwich"},
-  bondiSolo:{name:"Bondiola Solo",price:13000,cat:"sandwich"},
-  bondiLT:{name:"Bondiola Lech y Tomate",price:14000,cat:"sandwich"},
-  milaSolo:{name:"Milanesa Solo",price:9000,cat:"sandwich"},
-  milaLT:{name:"Mila Lech y Tomate",price:10000,cat:"sandwich"},
-  milaComp:{name:"Milanesa Completa",price:12500,cat:"sandwich"},
-  grilleSolo:{name:"Grille Pollo Solo",price:9000,cat:"sandwich"},
-  coca15:{name:"Coca Cola 1.5L",price:3500,cat:"bebidas"},
-  cerveza:{name:"Cerveza Miller/Heineken",price:4000,cat:"bebidas"},
-  vinoLopez:{name:"Vino Lopez",price:8000,cat:"bebidas"},
+asado12:{name:"Asado c/ Fritas 1/2",price:25000,cat:"parrilla",desc:"Entero $28.000"},
+vacio12:{name:"Vacio c/ Fritas 1/2",price:29000,cat:"parrilla",desc:"Entero $32.000"},
+entrana:{name:"Entraña c/ Fritas",price:32000,cat:"parrilla",desc:"Doble $34.000"},
+miniBife:{name:"Mini Bife Chorizo c/ Fritas",price:20000,cat:"parrilla"},
+bifeCost:{name:"Bife Costilla c/ Fritas",price:17000,cat:"parrilla"},
+bondiola:{name:"Bondiola c/ Fritas",price:18000,cat:"parrilla"},
+chori:{name:"Chorizo",price:6500,cat:"parrilla"},
+morci:{name:"Morcilla",price:6000,cat:"parrilla"},
+parri2:{name:"Parrillada p/ 2",price:59000,cat:"parrilla"},
+rinones:{name:"Riñones 1/2",price:10800,cat:"parrilla",desc:"Entero $13.000"},
+chinchu:{name:"Chinchulines 1/2",price:10500,cat:"parrilla",desc:"Entero $12.000"},
+pollo14:{name:"1/4 Pollo c/ Fritas",price:12000,cat:"parrilla"},
+fritasGiga:{name:"Fritas Gigantes",price:12000,cat:"parrilla"},
+provo:{name:"Provoleta",price:13000,cat:"parrilla"},
+polloEntero:{name:"Pollo Entero (llevar)",price:33000,cat:"parrilla"},
+polloFrit:{name:"Pollo Entero c/ Fritas",price:38000,cat:"parrilla"},
+fideosAlbon:{name:"Fideos c/ Albondigas",price:14000,cat:"parrilla"},
+mila:{name:"Milanesa c/ Fritas",price:14500,cat:"minutas"},
+mila2h:{name:"Mila c/ Fritas y 2 Huevos",price:22000,cat:"minutas"},
+milaNapo:{name:"Mila Napo c/ Fritas",price:18000,cat:"minutas"},
+suprema:{name:"Suprema c/ Fritas",price:14000,cat:"minutas"},
+suprema2h:{name:"Suprema c/ 2 Huevos",price:19000,cat:"minutas"},
+tortilla:{name:"Tortilla Papas",price:9000,cat:"minutas"},
+bunuelo:{name:"Buñuelo Acelga c/u",price:1800,cat:"minutas"},
+pechuga:{name:"Pechuga Grille c/ Fritas",price:15000,cat:"minutas"},
+chuleta:{name:"Chuleta c/ 2 Huevos",price:22000,cat:"minutas"},
+mixtaCh:{name:"Mixta Chica",price:5000,cat:"ensaladas",desc:"Grande $7.000"},
+zanahHuevo:{name:"Zanahoria-Huevo Ch",price:4000,cat:"ensaladas",desc:"Grande $7.000"},
+ensalCompleta:{name:"Lechuga-Tom-Huevo-Zana Ch",price:8000,cat:"ensaladas",desc:"Grande $9.500"},
+flan:{name:"Flan",price:8000,cat:"postres"},
+budin:{name:"Budin Pan",price:8000,cat:"postres"},
+quesoDulce:{name:"Queso y Dulce",price:15000,cat:"postres"},
+adicional:{name:"Adic Crema/Dulce",price:2800,cat:"postres"},
+ensalFruta:{name:"Ensalada Fruta",price:8000,cat:"postres"},
+choripan:{name:"Choripan",price:6500,cat:"sandwich"},
+vacioSolo:{name:"Vacio Solo",price:15000,cat:"sandwich"},
+vacioLT:{name:"Vacio Lech y Tomate",price:16000,cat:"sandwich"},
+vacioComp:{name:"Vacio Completo",price:18000,cat:"sandwich"},
+bondiSolo:{name:"Bondiola Solo",price:13000,cat:"sandwich"},
+bondiLT:{name:"Bondiola Lech y Tomate",price:14000,cat:"sandwich"},
+milaSolo:{name:"Mila Solo",price:9000,cat:"sandwich"},
+milaLT:{name:"Mila Lech y Tomate",price:10000,cat:"sandwich"},
+milaComp:{name:"Mila Completa",price:12500,cat:"sandwich"},
+grilleSolo:{name:"Grille Pollo Solo",price:9000,cat:"sandwich"},
+coca15:{name:"Coca Cola 1.5L",price:3500,cat:"bebidas"},
+cocaCh:{name:"Coca 500ml",price:2000,cat:"bebidas"},
+cerveza:{name:"Cerveza Miller",price:4000,cat:"bebidas"},
+heineken:{name:"Heineken 1L",price:4500,cat:"bebidas"},
+vinoLopez:{name:"Vino Lopez",price:8000,cat:"bebidas"},
+vinoVasco:{name:"Vasco Viejo",price:7500,cat:"bebidas"},
 };
 
 function renderAll(){
@@ -132,20 +136,13 @@ function renderAll(){
 renderAll();
 
 const cart={};
-function chg(id,d){
-  cart[id]=(cart[id]||0)+d; if(cart[id]<0)cart[id]=0;
-  const el=document.getElementById('qty-'+id); if(el) el.innerText=cart[id];
-  let t=0,c=0; for(let k in cart) if(cart[k]>0){t+=cart[k]*prods[k].price; c+=cart[k];}
-  document.getElementById('tot').innerText='$'+t.toLocaleString('es-AR');
-  document.getElementById('cnt').innerText=c+' productos';
-}
-
+function chg(id,d){cart[id]=(cart[id]||0)+d;if(cart[id]<0)cart[id]=0;let e=document.getElementById('qty-'+id);if(e)e.innerText=cart[id];let t=0,c=0;for(let k in cart)if(cart[k]>0){t+=cart[k]*prods[k].price;c+=cart[k];}document.getElementById('tot').innerText='$'+t.toLocaleString('es-AR');document.getElementById('cnt').innerText=c+' productos';}
 function openM(){let c=0;for(let k in cart)c+=cart[k];if(!c){alert("Agregá productos");return;}document.getElementById('ov').style.display='flex';}
 function closeM(){document.getElementById('ov').style.display='none';}
 
-// FIX CATEGORIAS PINTADAS
+// FIX CATEGORIAS PINTADAS - SE MANTIENE PINTADA LA SELECCIONADA
 const pills=document.querySelectorAll('#navCat.pill');
-const sections=document.querySelectorAll('#sugerencias,#parrilla,#minutas,#ensaladas,#postres,#sandwich,#bebidas');
+const secs=document.querySelectorAll('#sugerencias,#parrilla,#minutas,#ensaladas,#postres,#sandwich,#bebidas');
 pills.forEach(p=>{
   p.addEventListener('click',e=>{
     e.preventDefault();
@@ -155,8 +152,8 @@ pills.forEach(p=>{
     p.scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'});
   });
 });
-const obs=new IntersectionObserver(ents=>{
-  ents.forEach(en=>{
+const ob=new IntersectionObserver(es=>{
+  es.forEach(en=>{
     if(en.isIntersecting){
       pills.forEach(x=>x.classList.remove('a','active'));
       const ac=document.querySelector(`#navCat.pill[href="#${en.target.id}"]`);
@@ -164,45 +161,43 @@ const obs=new IntersectionObserver(ents=>{
     }
   });
 },{rootMargin:'-40% 0px -55% 0px'});
-sections.forEach(s=>obs.observe(s));
+secs.forEach(s=>ob.observe(s));
 
-// ENVIO + BASE CLIENTES + INFORME
+// ENVIO SIN BARRIO Y SIN CELULAR - SOLO 3 CAMPOS
 function send(){
   const nn=document.getElementById('nn').value.trim();
   const dd=document.getElementById('dd').value.trim();
-  const tel=document.getElementById('tel').value.trim();
   const pp=document.getElementById('pp').value;
-  const barrio=document.getElementById('barrio').value.trim();
   const notas=document.getElementById('notas').value.trim();
   let ok=true;
   document.querySelectorAll('.err').forEach(e=>e.style.display='none');
   if(nn.length<3){document.getElementById('err-nn').style.display='block';ok=false;}
   if(dd.length<5){document.getElementById('err-dd').style.display='block';ok=false;}
-  if(tel.length<8){document.getElementById('err-tel').style.display='block';ok=false;}
   if(!pp){document.getElementById('err-pp').style.display='block';ok=false;}
-  if(!ok){alert("Completa todos los campos con *");return;}
+  if(!ok){alert("Completa Nombre, Dirección y Pago");return;}
 
-  const telKey=tel.replace(/\D/g,'');
   const ahora=new Date(); const fechaKey=ahora.toISOString().split('T')[0]; const pedidoId='PED-'+Date.now();
   let items=[],tot=0; for(let k in cart) if(cart[k]>0){tot+=cart[k]*prods[k].price; items.push({id:k,nombre:prods[k].name,cant:cart[k],precio:prods[k].price});}
-  const pedido={id:pedidoId,fecha:ahora.toLocaleDateString('es-AR'),hora:ahora.toLocaleTimeString('es-AR'),fechaKey,cliente:{nombre:nn,direccion:dd,barrio,telefono:tel,telKey},pago:pp,items,total:tot,notas,estado:"PENDIENTE",timestamp:firebase.database.ServerValue.TIMESTAMP};
+  const pedido={id:pedidoId,fecha:ahora.toLocaleDateString('es-AR'),hora:ahora.toLocaleTimeString('es-AR'),fechaKey,cliente:{nombre:nn,direccion:dd},pago:pp,items,total:tot,notas,estado:"PENDIENTE",timestamp:firebase.database.ServerValue.TIMESTAMP};
 
   db.ref('ventas/'+pedidoId).set(pedido);
-  db.ref('caja_diaria/'+fechaKey+'/'+pedidoId).set({total:tot,pago:pp,cliente:nn,tel:telKey,hora:pedido.hora});
+  db.ref('caja_diaria/'+fechaKey+'/'+pedidoId).set({total:tot,pago:pp,cliente:nn,hora:pedido.hora});
   db.ref('comandas_parrilla/'+pedidoId).set(pedido);
 
-  const cliRef=db.ref('clientes/'+telKey);
+  // BASE CLIENTES POR NOMBRE (sin celular por ahora)
+  const nombreKey=nn.toLowerCase().replace(/\s+/g,'_').replace(/[^a-z0-9_]/g,'');
+  const cliRef=db.ref('clientes/'+nombreKey);
   cliRef.once('value').then(s=>{
     if(!s.exists()){
-      cliRef.set({nombre:nn,direccion:dd,barrio,telefono:tel,telKey,primerPedido:fechaKey,ultimoPedido:fechaKey,pedidos:1,totalGastado:tot,promedio:tot,estado:"NUEVO"});
+      cliRef.set({nombre:nn,direccion:dd,primerPedido:fechaKey,ultimoPedido:fechaKey,pedidos:1,totalGastado:tot,estado:"NUEVO"});
     }else{
       const d=s.val();
-      cliRef.update({nombre:nn,direccion:dd,ultimoPedido:fechaKey,pedidos:d.pedidos+1,totalGastado:d.totalGastado+tot,promedio:Math.round((d.totalGastado+tot)/(d.pedidos+1)),estado:(d.pedidos+1)>=5?"FRECUENTE":"RECURRENTE"});
+      cliRef.update({ultimoPedido:fechaKey,pedidos:d.pedidos+1,totalGastado:d.totalGastado+tot,estado:(d.pedidos+1)>=5?"FRECUENTE":"RECURRENTE"});
     }
-    db.ref('clientes/'+telKey+'/historial/'+pedidoId).set({fecha:fechaKey,total:tot,items:items.length});
+    db.ref('clientes/'+nombreKey+'/historial/'+pedidoId).set({fecha:fechaKey,total:tot});
   });
 
-  let txt=`*COMANDA ${pedidoId} - LA PERSEVERANCIA*%0A👤 ${nn}%0A📍 ${dd} ${barrio}%0A📞 ${tel}%0A💳 ${pp}%0A%0A`;
+  let txt=`*COMANDA ${pedidoId} - LA PERSEVERANCIA*%0A👤 ${nn}%0A📍 ${dd}%0A💳 ${pp}%0A%0A`;
   items.forEach(i=>txt+=`${i.cant}x ${i.nombre}%0A`); if(notas) txt+=`%0A📝 ${notas}%0A`; txt+=`%0A*TOTAL $${tot.toLocaleString('es-AR')}*`;
   window.open('https://wa.me/5491140434137?text='+txt,'_blank');
   closeM();
