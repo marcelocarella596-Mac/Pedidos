@@ -15,14 +15,14 @@ body{background:#0a0a0a;color:#fff;max-width:500px;margin:0 auto;padding-bottom:
 .bt{position:absolute;bottom:8px;left:12px;z-index:2}
 .bt h1{font-size:20px;font-weight:900}
 .bt span{font-size:9px;background:#ffcc00;color:#000;padding:2px 6px;border-radius:6px;font-weight:900}
-.menudia{margin:10px 12px;background:#ffcc00;border-radius:12px;display:flex;border:2px solid #ffcc00;color:#000;overflow:hidden}
+.menudia{margin:10px 12px;background:#ffcc00;border-radius:12px;display:flex;border:2px solid #ffcc00;color:#000;overflow:hidden;cursor:pointer}
 .menudia.foto{width:90px;height:80px;background:#000;flex-shrink:0}
 .menudia.foto img{width:100%;height:100%;object-fit:cover}
 .menudia.txt{flex:1;padding:8px 10px}
 .menudia.txt b{font-size:12px;display:block}
 .menudia.txt i{font-size:10px;font-style:normal;color:#333;display:block;margin-top:2px}
 .menudia.price{padding:8px 10px;display:flex;align-items:center}
-.menudia.price span{font-size:11px;font-weight:900;background:#000;color:#ffcc00;padding:5px 10px;border-radius:8px;cursor:pointer}
+.menudia.price span{font-size:11px;font-weight:900;background:#000;color:#ffcc00;padding:5px 10px;border-radius:8px}
 .tabs{display:flex;gap:6px;padding:8px 12px;overflow-x:auto;position:sticky;top:0;background:#0a0a0a;z-index:5}
 .tabs::-webkit-scrollbar{display:none}
 .tab{padding:6px 12px;border-radius:16px;background:#1e1e1e;color:#888;font-size:10px;font-weight:700;white-space:nowrap;border:1px solid #2a2a2a;cursor:pointer}
@@ -39,7 +39,7 @@ body{background:#0a0a0a;color:#fff;max-width:500px;margin:0 auto;padding-bottom:
 .card.price{font-size:10px;font-weight:900;color:#ffcc00}
 .card.add{width:22px;height:22px;background:#ffcc00;color:#000;border:none;border-radius:50%;font-weight:900;font-size:12px;cursor:pointer}
 .q{position:absolute;top:4px;right:4px;background:#ffcc00;color:#000;font-size:8px;font-weight:900;padding:2px 5px;border-radius:8px}
-.cartbar{position:fixed;bottom:0;left:0;right:0;background:#111;border-top:1px solid #333;padding:10px 12px;display:flex;justify-content:space-between;align-items:center;max-width:500px;margin:0 auto}
+.cartbar{position:fixed;bottom:0;left:0;right:0;background:#111;border-top:1px solid #333;padding:10px 12px;display:flex;justify-content:space-between;align-items:center;max-width:500px;margin:0 auto;z-index:20}
 #modal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;z-index:50;padding:12px}
 .box{background:#1a1a1a;width:100%;max-width:360px;border-radius:14px;padding:16px;border:1px solid #333}
 .box input,.box select,.box textarea{width:100%;padding:10px;margin:4px 0;border-radius:8px;border:1px solid #333;background:#0f0f0f;color:#fff;font-size:12px}
@@ -53,7 +53,7 @@ body{background:#0a0a0a;color:#fff;max-width:500px;margin:0 auto;padding-bottom:
 
 <div class="menudia" onclick="addSugerencia()">
 <div class="foto"><img src="https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=200&q=60"></div>
-<div class="txt"><b>🍝 Ravioles con Estofado</b><i>Menú del día • casero • porción abundante + pan</i><i style="color:#000;font-weight:800;margin-top:3px">Hoy $12.500</i></div>
+<div class="txt"><b>🍝 Ravioles con Estofado</b><i>Menú del día • casero • abundante + pan</i><i style="color:#000;font-weight:800;margin-top:3px">Hoy $12.500</i></div>
 <div class="price"><span>AGREGAR</span></div>
 </div>
 
@@ -62,7 +62,7 @@ body{background:#0a0a0a;color:#fff;max-width:500px;margin:0 auto;padding-bottom:
 
 <div class="cartbar" id="cartbar" style="display:none"><div><div id="cTot" style="font-size:10px;color:#888">0 items</div><b id="pTot" style="color:#ffcc00;font-size:12px">$0</b></div><button onclick="openM()" style="background:#25D366;color:#fff;border:none;padding:10px 16px;border-radius:10px;font-weight:900;font-size:11px">🟢 PEDIR</button></div>
 
-<div id="modal"><div class="box"><h3 style="color:#ffcc00;text-align:center;font-size:14px;margin-bottom:8px">Finalizar pedido</h3><div class="sum" id="sum"></div><input id="nom" placeholder="Nombre *"><input id="dir" placeholder="Dirección *"><input id="tel" placeholder="WhatsApp"><select id="pago"><option>Efectivo</option><option>Transferencia</option><option>Mercado Pago</option></select><textarea id="obs" rows="2" placeholder="Observaciones"></textarea><div class="btns"><button onclick="closeM()" style="background:#333;color:#fff">Cancelar</button><button onclick="send()" style="background:#25D366;color:#fff">Enviar a cocina 🟢</button></div></div></div>
+<div id="modal"><div class="box"><h3 style="color:#ffcc00;text-align:center;font-size:14px;margin-bottom:8px">Finalizar pedido</h3><div class="sum" id="sum"></div><input id="nom" placeholder="Nombre *"><input id="dir" placeholder="Dirección *"><select id="pago"><option>Efectivo</option><option>Transferencia</option><option>Mercado Pago</option></select><textarea id="obs" rows="2" placeholder="Observaciones (ej: sin chimichurri)"></textarea><div class="btns"><button onclick="closeM()" style="background:#333;color:#fff">Cancelar</button><button onclick="send()" style="background:#25D366;color:#fff">Enviar a cocina 🟢</button></div></div></div>
 
 <script>
 const firebaseConfig={apiKey:"AIzaSyAvrpQSDoq9S87j3J7V4-uhJnPFCylCU",authDomain:"parrilla-la-perseveranci-f3f54.firebaseapp.com",databaseURL:"https://parrilla-la-perseveranci-f3f54-default-rtdb.firebaseio.com",projectId:"parrilla-la-perseveranci-f3f54"};
@@ -92,13 +92,34 @@ const MENU=[
 let cart={},cat='todos';
 const CATS=['todos','parrilla','sandwich','minuta','guarnicion','bebida','postre'];
 function renderTabs(){document.getElementById('tabs').innerHTML=CATS.map(c=>`<div class="tab ${cat===c?'active':''}" onclick="cat='${c}';renderTabs();renderGrid()">${c.toUpperCase()}</div>`).join('');}
-function renderGrid(){let list=cat==='todos'?MENU:MENU.filter(m=>m.cat===cat);document.getElementById('grid').innerHTML=list.map(m=>{const q=cart[m.n]||0;return `<div class="card" onclick="add('${m.n}')"><div class="img"><img src="${m.img}" loading="lazy">${q?`<div class="q">x${q}</div>`:''}</div><div class="info"><div class="name">${m.n}</div><div class="cat">${m.cat}</div><div class="foot"><div class="price">$${m.p.toLocaleString()}</div><button class="add">+</button></div></div></div>`}).join('');}
+function renderGrid(){let list=cat==='todos'?MENU:MENU.filter(m=>m.cat===cat);document.getElementById('grid').innerHTML=list.map(m=>{const q=cart[m.n]||0;return `<div class="card" onclick="add('${m.n}')"><div class="img"><img src="${m.img}" loading="lazy"><div class="q" style="display:${q?'block':'none'}">x${q}</div></div><div class="info"><div class="name">${m.n}</div><div class="cat">${m.cat}</div><div class="foot"><div class="price">$${m.p.toLocaleString()}</div><button class="add">+</button></div></div></div>`}).join('');}
 function add(n){cart[n]=(cart[n]||0)+1;upd();renderGrid();}
 function upd(){let t=0,c=0;for(let k in cart){const p=MENU.find(x=>x.n===k);if(p){t+=p.p*cart[k];c+=cart[k];}}document.getElementById('cTot').innerText=c+' items';document.getElementById('pTot').innerText='$'+t.toLocaleString();document.getElementById('cartbar').style.display=c>0?'flex':'none';}
 function addSugerencia(){cart['Ravioles c/estofado']=(cart['Ravioles c/estofado']||0)+1;upd();renderGrid();}
 function openM(){if(!Object.keys(cart).length)return alert('Carrito vacío');let h='',t=0;for(let k in cart){const p=MENU.find(x=>x.n===k);if(!p)continue;t+=p.p*cart[k];h+=`${k} x${cart[k]}<br>`}h+=`<br><b style="color:#ffcc00">Total $${t.toLocaleString()}</b>`;document.getElementById('sum').innerHTML=h;document.getElementById('modal').style.display='flex';}
 function closeM(){document.getElementById('modal').style.display='none';}
-function send(){const nom=document.getElementById('nom').value.trim();const dir=document.getElementById('dir').value.trim();const tel=document.getElementById('tel').value.trim();const pago=document.getElementById('pago').value;const obs=document.getElementById('obs').value.trim();if(!nom||!dir)return alert('Falta nombre y dir');let items=[],tot=0,msg=`*PEDIDO*%0A`;for(let k in cart){const p=MENU.find(x=>x.n===k);if(!p)continue;tot+=p.p*cart[k];msg+=`• ${k} x${cart[k]}%0A`;items.push({n:k,nombre:k,cantidad:cart[k],p:p.p,precio:p.p,cat:p.cat,sub:p.cat});}msg+=`Total $${tot}%0A${nom}%0A${dir}`;const shortId=Date.now().toString().slice(-4);const key=`Canal - WhatsApp #${shortId} - ${nom}`;const data={mesa:key,mesaBase:'Canal - WhatsApp',canal:'Canal - WhatsApp',cliente:nom,direccion:dir,telefono:tel,pago:pago,obs:obs,items:items,total:tot,total_cobrado:tot,estado:'RECIBIDO',estado_parrilla:'RECIBIDO',estado_cocina:'RECIBIDO',emisor:'Cliente Web',hora:new Date().toLocaleTimeString().slice(0,5),timestamp:Date.now(),timestamp_estado:Date.now(),id:Date.now()};db.ref('comandas_activas/'+key).set(data).then(()=>{db.ref('mensajes').push({emisor:'WEB',texto:`🟢 #${shortId} - ${nom} $${tot.toLocaleString()}`,hora:new Date().toLocaleTimeString().slice(0,5),ts:Date.now(),destino:'todos'});window.open(`https://wa.me/5491140434137?text=${msg}`,'_blank');cart={};upd();renderGrid();closeM();});}
+function send(){
+ const nom=document.getElementById('nom').value.trim();
+ const dir=document.getElementById('dir').value.trim();
+ const pago=document.getElementById('pago').value;
+ const obs=document.getElementById('obs').value.trim();
+ if(!nom||!dir){alert('Falta nombre y dirección');return;}
+ let items=[],tot=0,msg=`*PEDIDO LA PERSEVERANCIA*%0A%0A`;
+ for(let k in cart){const p=MENU.find(x=>x.n===k);if(!p)continue;tot+=p.p*cart[k];msg+=`• ${k} x${cart[k]} - $${p.p.toLocaleString()}%0A`;items.push({n:k,nombre:k,cantidad:cart[k],p:p.p,precio:p.p,cat:p.cat,sub:p.cat});}
+ msg+=`%0A*Total: $${tot.toLocaleString()}*%0A*Cliente:* ${nom}%0A*Dir:* ${dir}%0A*Pago:* ${pago}%0A${obs?`*Obs:* ${obs}`:''}`;
+ const shortId=Date.now().toString().slice(-4);
+ const key=`Canal - WhatsApp #${shortId} - ${nom}`;
+ const data={mesa:key,mesaBase:'Canal - WhatsApp',canal:'Canal - WhatsApp',cliente:nom,direccion:dir,pago:pago,obs:obs,items:items,total:tot,total_cobrado:tot,estado:'RECIBIDO',estado_parrilla:'RECIBIDO',estado_cocina:'RECIBIDO',emisor:'Cliente Web',hora:new Date().toLocaleTimeString().slice(0,5),timestamp:Date.now(),timestamp_estado:Date.now(),id:Date.now(),origen:'web_pedidos'};
+ // ABRIR WHATSAPP PRIMERO - NO ESPERAR FIREBASE
+ const waUrl=`https://wa.me/5491140434137?text=${msg}`;
+ window.open(waUrl,'_blank');
+ // FIREBASE EN PARALELO - PARA GUSTAVO, MARIANA Y HERNAN
+ db.ref('comandas_activas/'+key).set(data).then(()=>{
+   db.ref('mensajes').push({emisor:'WEB',texto:`🟢 WHATSAPP #${shortId} - ${nom} $${tot.toLocaleString()} - ${dir}`,hora:new Date().toLocaleTimeString().slice(0,5),ts:Date.now(),destino:'todos'});
+ }).catch(e=>{console.log('Firebase error',e);});
+ cart={};upd();renderGrid();closeM();
+ alert(`¡Pedido #${shortId} enviado! Ya está en cocina`);
+}
 renderTabs();renderGrid();
 </script>
 </body>
