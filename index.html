@@ -1,206 +1,240 @@
-<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Parrilla La Perseverancia - Av Argentina 5801</title>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parrilla La Perseverancia - Pedidos</title>
 <style>
-:root{--y:#ffc107;--bg:#0f0f0f}
-*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system}
-body{background:var(--bg);color:#fff;padding-bottom:110px;overflow-x:hidden}
-/* BANNER ESTIRADO FULL WIDTH - NO RECTANGULAR EN EL MEDIO */
-.banner-full{width:100%;height:210px;overflow:hidden;background:#000;position:relative}
-.banner-full img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
-/* NAV - FIX PINTADO */
-.nav{display:flex;gap:6px;padding:10px;overflow-x:auto;background:#0f0f0f;position:sticky;top:0;z-index:30;border-bottom:1px solid #222}
-.nav::-webkit-scrollbar{display:none}
-.pill{background:#222;color:#aaa;padding:9px 14px;border-radius:20px;font-size:11px;font-weight:800;white-space:nowrap;border:1.5px solid #333;text-decoration:none;transition:.15s;cursor:pointer}
-.pill.a,.pill.active{background:var(--y)!important;color:#000!important;border-color:var(--y)!important;box-shadow:0 2px 10px rgba(255,193,7,.4);transform:scale(1.05)}
-/* SECCIONES */
-.sug{padding:12px 10px}.t{font-size:12px;font-weight:900;color:var(--y);margin-bottom:8px}
-.grid-h{display:flex;gap:8px;overflow-x:auto}.grid-h::-webkit-scrollbar{display:none}
-.card-h{min-width:132px;background:#1a1a1a;border-radius:12px;overflow:hidden;border:1px solid #2a2a2a;flex-shrink:0}.card-h img{width:100%;height:86px;object-fit:cover;display:block}.b{padding:7px}.n{font-size:11px;font-weight:700;height:26px;overflow:hidden;line-height:1.2}.p{color:var(--y);font-weight:800;font-size:12px}.ad{width:100%;margin-top:5px;background:var(--y);border:none;padding:6px;border-radius:7px;font-weight:800;font-size:11px;color:#000}
-.h{margin:16px 8px 8px;padding:9px 12px;border-left:4px solid var(--y);background:#1c1c1c;border-radius:0 8px 8px 0;display:flex;justify-content:space-between}.h h2{font-size:12px}.h span{font-size:10px;background:#222;padding:3px 8px;border-radius:10px;color:#888}
-.g{display:grid;gap:6px;padding:0 8px;grid-template-columns:1fr 1fr}.it{background:#1a1a1a;border-radius:11px;padding:9px;border:1px solid #262626;border-left:3px solid #333;display:flex;flex-direction:column;justify-content:space-between;min-height:72px}.tp{display:flex;justify-content:space-between;gap:6px}.nm{font-size:11px;font-weight:600;flex:1;line-height:1.15}.pr{font-size:11px;font-weight:800;color:var(--y);background:rgba(255,193,7,.12);padding:3px 6px;border-radius:6px}.ds{font-size:9px;color:#777;margin-top:2px}.q{display:flex;justify-content:flex-end;margin-top:7px}.ct{display:flex;align-items:center;gap:6px;background:#111;border:1px solid #222;border-radius:20px;padding:2px 3px}.bq{width:22px;height:22px;border-radius:50%;border:none;background:var(--y);font-weight:900;font-size:14px;display:flex;align-items:center;justify-content:center}.cq{font-size:12px;font-weight:800;min-width:14px;text-align:center}
-.bar{position:fixed;bottom:0;left:0;right:0;background:#1a1a1a;padding:10px;border-top:1px solid #2a2a2a;z-index:100}.row{display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px}.tt{font-weight:900;color:var(--y);font-size:14px}.bt{width:100%;background:var(--y);color:#000;border:none;padding:14px;border-radius:12px;font-weight:900;font-size:14px}
-/* MODAL - SOLO 3 CAMPOS AHORA */
-.ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:1000;align-items:flex-end;justify-content:center}.bx{background:#1e1e1e;padding:18px;border-radius:18px 18px 0 0;width:100%;max-width:480px;max-height:90vh;overflow-y:auto}.fg{margin-bottom:12px}.fg label{font-size:11px;font-weight:700;display:block;margin-bottom:5px;color:#ccc}.fg label b{color:#ff4444}.fg input,.fg select,.fg textarea{width:100%;padding:12px;border-radius:9px;border:1px solid #444;background:#2a2a2a;color:#fff;font-size:13px}.fg textarea{resize:none}.al{display:none;background:rgba(255,193,7,.12);border:1px dashed var(--y);padding:10px;border-radius:8px;margin-top:6px;font-size:12px}.err{font-size:10px;color:#ff6b6b;display:none;margin-top:4px}
-</style></head><body>
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}
+body{background:#111;color:#fff;padding-bottom:100px}
+.banner-full{width:100%;height:180px;overflow:hidden;background:#000;position:relative}
+.banner-full img{width:100%;height:100%;object-fit:cover;object-position:left center;display:block}
+@media(max-width:600px){.banner-full{height:150px}.banner-full img{object-position:15% center}}
 
-<!-- BANNER ESTIRADO FULL WIDTH -->
-<div class="banner-full"><img src="parrilla_banner.jpeg" alt="Parrilla La Perseverancia - Av Argentina 5801"></div>
+.header{padding:12px;text-align:center;background:#1a1a1a}
+.header h1{font-size:20px;color:#ffcc00}
+.header p{font-size:12px;opacity:.7}
 
-<nav class="nav" id="navCat">
-  <a class="pill a active" href="#sugerencias">🔥 SUGERENCIAS</a>
-  <a class="pill" href="#parrilla">PARRILLA</a>
-  <a class="pill" href="#minutas">MINUTAS</a>
-  <a class="pill" href="#ensaladas">ENSALADAS</a>
-  <a class="pill" href="#postres">POSTRES</a>
-  <a class="pill" href="#sandwich">SANDWICH</a>
-  <a class="pill" href="#bebidas">BEBIDAS</a>
-</nav>
+.sug{padding:10px;background:#1a1a1a;margin:10px;border-radius:12px;border:1px solid #333}
+.sug .t{font-weight:800;color:#ffcc00;margin-bottom:8px;font-size:14px}
+.grid-h{display:flex;gap:10px;overflow-x:auto;padding-bottom:5px;scroll-snap-type:x mandatory}
+.grid-h::-webkit-scrollbar{display:none}
+.card-h{min-width:150px;max-width:150px;background:#222;border-radius:10px;overflow:hidden;scroll-snap-align:start;border:1px solid #333}
+.card-h .imgbox{width:100%;height:110px;background:#000;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.card-h .imgbox img{width:100%;height:100%;object-fit:cover}
+.card-h .imgbox span{position:absolute;font-size:30px}
+.card-h .b{padding:8px}
+.card-h .n{font-size:12px;font-weight:700;height:30px}
+.card-h .p{color:#ffcc00;font-weight:800;font-size:13px;margin:4px 0}
+.ad{width:100%;background:#ffcc00;color:#000;border:none;padding:6px;border-radius:6px;font-weight:800;font-size:12px;cursor:pointer}
 
-<div class="sug" id="sugerencias"><div class="t">SUGERENCIAS CON FOTO REAL</div><div class="grid-h">
-<div class="card-h"><img src="fideos_albondigas.jpg" loading="lazy"><div class="b"><div class="n">Fideos con Albóndigas</div><div class="p">$14.000</div><button class="ad" onclick="chg('fideosAlbon',1)">+ Agregar</button></div></div>
-<div class="card-h"><img src="bife.jpg" loading="lazy"><div class="b"><div class="n">Bife Costilla c/ Fritas</div><div class="p">$17.000</div><button class="ad" onclick="chg('bifeCost',1)">+ Agregar</button></div></div>
-<div class="card-h"><img src="milanesa.jpg" loading="lazy"><div class="b"><div class="n">Milanesa Gigante c/ Fritas</div><div class="p">$14.500</div><button class="ad" onclick="chg('mila',1)">+ Agregar</button></div></div>
-<div class="card-h"><img src="chuleta.jpg" loading="lazy"><div class="b"><div class="n">Chuleta c/ 2 Huevos</div><div class="p">$22.000</div><button class="ad" onclick="chg('chuleta',1)">+ Agregar</button></div></div>
-</div></div>
+.cats{display:flex;gap:8px;padding:10px;overflow-x:auto;position:sticky;top:0;background:#111;z-index:10}
+.cats::-webkit-scrollbar{display:none}
+.cat{background:#222;border:1px solid #444;padding:6px 12px;border-radius:20px;font-size:12px;white-space:nowrap;cursor:pointer}
+.cat.active{background:#ffcc00;color:#000;border-color:#ffcc00;font-weight:800}
 
-<div id="parrilla"><div class="h"><h2>🥩 PARRILLA</h2><span>18 items</span></div><div class="g" id="grid-parrilla"></div></div>
-<div id="minutas"><div class="h"><h2>🍳 MINUTAS</h2><span>9 items</span></div><div class="g" id="grid-minutas"></div></div>
-<div id="ensaladas"><div class="h"><h2>🥗 ENSALADAS</h2><span>3 items</span></div><div class="g" id="grid-ensaladas"></div></div>
-<div id="postres"><div class="h"><h2>🍮 POSTRES</h2><span>5 items</span></div><div class="g" id="grid-postres"></div></div>
-<div id="sandwich"><div class="h"><h2>🥪 SANDWICH</h2><span>10 items</span></div><div class="g" id="grid-sandwich"></div></div>
-<div id="bebidas"><div class="h"><h2>🥤 BEBIDAS / VINOS / CERVEZA</h2><span>14 items</span></div><div class="g" id="grid-bebidas"></div></div>
+.menu{padding:10px;display:grid;gap:10px}
+.item{display:flex;justify-content:space-between;align-items:center;background:#1e1e1e;padding:10px;border-radius:10px;border:1px solid #333}
+.item .info{flex:1}
+.item .name{font-size:14px;font-weight:700}
+.item .price{font-size:13px;color:#ffcc00;margin-top:2px}
+.qty{display:flex;align-items:center;gap:8px}
+.qty button{width:32px;height:32px;border-radius:50%;border:none;background:#333;color:#fff;font-size:18px;cursor:pointer}
+.qty button.plus{background:#ffcc00;color:#000}
 
-<div class="bar"><div class="row"><span id="cnt">0 productos</span><span class="tt" id="tot">$0</span></div><button class="bt" onclick="openM()">Pedir por WhatsApp - 11 4043-4137</button></div>
+.cart-bar{position:fixed;bottom:0;left:0;right:0;background:#1a1a1a;border-top:1px solid #333;padding:12px;display:flex;justify-content:space-between;align-items:center;z-index:20}
+.cart-bar button{background:#25D366;color:#fff;border:none;padding:12px 20px;border-radius:10px;font-weight:800;cursor:pointer}
 
-<!-- MODAL SIMPLIFICADO SIN BARRIO Y SIN CELULAR -->
-<div class="ov" id="ov"><div class="bx">
-<h2 style="font-size:15px;margin-bottom:14px">Finalizar pedido - Completa todo *</h2>
-<div class="fg"><label>Nombre y apellido <b>*</b></label><input id="nn" placeholder="Ej: Juan Perez"><div class="err" id="err-nn">Falta nombre</div></div>
-<div class="fg"><label>Dirección completa <b>*</b></label><input id="dd" placeholder="Ej: Av. Argentina 5801 2B"><div class="err" id="err-dd">Falta dirección</div></div>
-<div class="fg"><label>Forma de pago <b>*</b></label><select id="pp" onchange="document.getElementById('al').style.display=this.value.includes('Transferencia')?'block':'none'"><option value="">Seleccionar... *</option><option>Efectivo</option><option>Transferencia - Alias: Av.argentina</option></select><div class="al" id="al"><b>Alias: Av.argentina - Titular: La Perseverancia</b><br><small>Enviar comprobante al mismo WhatsApp 11 4043-4137</small></div><div class="err" id="err-pp">Seleccioná forma de pago</div></div>
-<div class="fg"><label>Notas para parrilla (opcional)</label><textarea id="notas" rows="2" placeholder="Ej: Sin chimichurri, poco hecho, timbre roto..."></textarea></div>
-<div style="display:flex;gap:8px;margin-top:16px"><button onclick="closeM()" style="flex:1;padding:12px;border-radius:10px;background:#2a2a2a;color:#fff;border:1px solid #333">Cancelar</button><button onclick="send()" style="flex:2;padding:12px;border-radius:10px;background:#25d366;color:#fff;border:none;font-weight:800;font-size:14px">Enviar Pedido</button></div>
-</div></div>
+#modal{position:fixed;inset:0;background:rgba(0,0,0,.8);display:none;align-items:center;justify-content:center;z-index:30;padding:15px}
+.modal-box{background:#222;width:100%;max-width:400px;border-radius:15px;padding:20px;border:1px solid #444}
+.modal-box h3{text-align:center;margin-bottom:12px;color:#ffcc00}
+.modal-box input,.modal-box select{width:100%;padding:12px;margin:6px 0;border-radius:8px;border:1px solid #444;background:#111;color:#fff}
+.modal-box .btns{display:flex;gap:10px;margin-top:12px}
+.modal-box .btns button{flex:1;padding:12px;border-radius:8px;border:none;font-weight:800;cursor:pointer}
+.cancel{background:#333;color:#fff}
+.send{background:#25D366;color:#fff}
+</style>
+</head>
+<body>
+
+<div class="banner-full">
+  <img src="parrilla_banner.jpeg" alt="Parrilla La Perseverancia">
+</div>
+
+<div class="header">
+  <h1>🔥 PARRILLA LA PERSEVERANCIA</h1>
+  <p>Av. Argentina 5801 - Envios a domicilio</p>
+</div>
+
+<!-- SUGERENCIAS CON FOTOS REALES -->
+<div class="sug" id="sugerencias">
+  <div class="t">🔥 SUGERENCIAS DE HOY - FOTOS REALES</div>
+  <div class="grid-h">
+
+    <div class="card-h">
+      <div class="imgbox">
+        <img src="sugerencias/fideos.jpg" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <span style="display:none">🍝</span>
+      </div>
+      <div class="b">
+        <div class="n">Fideos c/ Albóndigas</div>
+        <div class="p">$14.000</div>
+        <button class="ad" onclick="chg('fideosAlbon',1)">+ Agregar</button>
+      </div>
+    </div>
+
+    <div class="card-h">
+      <div class="imgbox">
+        <img src="sugerencias/ravioles.jpg" onerror="this.style.display='none'">
+      </div>
+      <div class="b">
+        <div class="n">Ravioles c/ Tuco</div>
+        <div class="p">$14.000</div>
+        <button class="ad" onclick="chg('ravioles',1)">+ Agregar</button>
+      </div>
+    </div>
+
+    <div class="card-h">
+      <div class="imgbox">
+        <img src="sugerencias/bife.jpg" onerror="this.style.display='none'">
+      </div>
+      <div class="b">
+        <div class="n">Bife Costilla c/ Fritas</div>
+        <div class="p">$17.000</div>
+        <button class="ad" onclick="chg('bifeCost',1)">+ Agregar</button>
+      </div>
+    </div>
+
+    <div class="card-h">
+      <div class="imgbox">
+        <img src="sugerencias/ensalada.jpg" onerror="this.style.display='none'">
+      </div>
+      <div class="b">
+        <div class="n">Ensalada Completa Pollo</div>
+        <div class="p">$8.000</div>
+        <button class="ad" onclick="chg('ensalCompleta',1)">+ Agregar</button>
+      </div>
+    </div>
+
+    <div class="card-h">
+      <div class="imgbox">
+        <img src="sugerencias/asado.jpg" onerror="this.style.display='none'">
+      </div>
+      <div class="b">
+        <div class="n">Asado c/ Fritas</div>
+        <div class="p">$18.000</div>
+        <button class="ad" onclick="chg('asado',1)">+ Agregar</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="cats" id="cats"></div>
+<div class="menu" id="menu"></div>
+
+<div class="cart-bar">
+  <div><span id="cartCount">0 items</span> - <b id="cartTotal">$0</b></div>
+  <button onclick="openModal()">Pedir por WhatsApp</button>
+</div>
+
+<div id="modal">
+  <div class="modal-box">
+    <h3>Finalizar Pedido</h3>
+    <input id="nombre" placeholder="Tu nombre">
+    <input id="direccion" placeholder="Dirección de entrega">
+    <select id="pago">
+      <option value="Efectivo">Efectivo</option>
+      <option value="Transferencia">Transferencia</option>
+      <option value="Mercado Pago">Mercado Pago</option>
+    </select>
+    <input id="obs" placeholder="Observaciones (opcional)">
+    <div class="btns">
+      <button class="cancel" onclick="closeModal()">Cancelar</button>
+      <button class="send" onclick="enviar()">Enviar</button>
+    </div>
+  </div>
+</div>
 
 <script>
-// FIREBASE
-const firebaseConfig={databaseURL:"https://parrilla-la-perseverancia-f3f54-default-rtdb.firebaseio.com",projectId:"parrilla-la-perseverancia-f3f54"};
-firebase.initializeApp(firebaseConfig);
-const db=firebase.database();
-
-// MENU COMPLETO DE TU PDF
-const prods={
-asado12:{name:"Asado c/ Fritas 1/2",price:25000,cat:"parrilla",desc:"Entero $28.000"},
-vacio12:{name:"Vacio c/ Fritas 1/2",price:29000,cat:"parrilla",desc:"Entero $32.000"},
-entrana:{name:"Entraña c/ Fritas",price:32000,cat:"parrilla",desc:"Doble $34.000"},
-miniBife:{name:"Mini Bife Chorizo c/ Fritas",price:20000,cat:"parrilla"},
-bifeCost:{name:"Bife Costilla c/ Fritas",price:17000,cat:"parrilla"},
-bondiola:{name:"Bondiola c/ Fritas",price:18000,cat:"parrilla"},
-chori:{name:"Chorizo",price:6500,cat:"parrilla"},
-morci:{name:"Morcilla",price:6000,cat:"parrilla"},
-parri2:{name:"Parrillada p/ 2",price:59000,cat:"parrilla"},
-rinones:{name:"Riñones 1/2",price:10800,cat:"parrilla",desc:"Entero $13.000"},
-chinchu:{name:"Chinchulines 1/2",price:10500,cat:"parrilla",desc:"Entero $12.000"},
-pollo14:{name:"1/4 Pollo c/ Fritas",price:12000,cat:"parrilla"},
-fritasGiga:{name:"Fritas Gigantes",price:12000,cat:"parrilla"},
-provo:{name:"Provoleta",price:13000,cat:"parrilla"},
-polloEntero:{name:"Pollo Entero (llevar)",price:33000,cat:"parrilla"},
-polloFrit:{name:"Pollo Entero c/ Fritas",price:38000,cat:"parrilla"},
-fideosAlbon:{name:"Fideos c/ Albondigas",price:14000,cat:"parrilla"},
-mila:{name:"Milanesa c/ Fritas",price:14500,cat:"minutas"},
-mila2h:{name:"Mila c/ Fritas y 2 Huevos",price:22000,cat:"minutas"},
-milaNapo:{name:"Mila Napo c/ Fritas",price:18000,cat:"minutas"},
-suprema:{name:"Suprema c/ Fritas",price:14000,cat:"minutas"},
-suprema2h:{name:"Suprema c/ 2 Huevos",price:19000,cat:"minutas"},
-tortilla:{name:"Tortilla Papas",price:9000,cat:"minutas"},
-bunuelo:{name:"Buñuelo Acelga c/u",price:1800,cat:"minutas"},
-pechuga:{name:"Pechuga Grille c/ Fritas",price:15000,cat:"minutas"},
-chuleta:{name:"Chuleta c/ 2 Huevos",price:22000,cat:"minutas"},
-mixtaCh:{name:"Mixta Chica",price:5000,cat:"ensaladas",desc:"Grande $7.000"},
-zanahHuevo:{name:"Zanahoria-Huevo Ch",price:4000,cat:"ensaladas",desc:"Grande $7.000"},
-ensalCompleta:{name:"Lechuga-Tom-Huevo-Zana Ch",price:8000,cat:"ensaladas",desc:"Grande $9.500"},
-flan:{name:"Flan",price:8000,cat:"postres"},
-budin:{name:"Budin Pan",price:8000,cat:"postres"},
-quesoDulce:{name:"Queso y Dulce",price:15000,cat:"postres"},
-adicional:{name:"Adic Crema/Dulce",price:2800,cat:"postres"},
-ensalFruta:{name:"Ensalada Fruta",price:8000,cat:"postres"},
-choripan:{name:"Choripan",price:6500,cat:"sandwich"},
-vacioSolo:{name:"Vacio Solo",price:15000,cat:"sandwich"},
-vacioLT:{name:"Vacio Lech y Tomate",price:16000,cat:"sandwich"},
-vacioComp:{name:"Vacio Completo",price:18000,cat:"sandwich"},
-bondiSolo:{name:"Bondiola Solo",price:13000,cat:"sandwich"},
-bondiLT:{name:"Bondiola Lech y Tomate",price:14000,cat:"sandwich"},
-milaSolo:{name:"Mila Solo",price:9000,cat:"sandwich"},
-milaLT:{name:"Mila Lech y Tomate",price:10000,cat:"sandwich"},
-milaComp:{name:"Mila Completa",price:12500,cat:"sandwich"},
-grilleSolo:{name:"Grille Pollo Solo",price:9000,cat:"sandwich"},
-coca15:{name:"Coca Cola 1.5L",price:3500,cat:"bebidas"},
-cocaCh:{name:"Coca 500ml",price:2000,cat:"bebidas"},
-cerveza:{name:"Cerveza Miller",price:4000,cat:"bebidas"},
-heineken:{name:"Heineken 1L",price:4500,cat:"bebidas"},
-vinoLopez:{name:"Vino Lopez",price:8000,cat:"bebidas"},
-vinoVasco:{name:"Vasco Viejo",price:7500,cat:"bebidas"},
+const productos = {
+ fideosAlbon:{n:'Fideos c/ Albóndigas',p:14000,cat:'Pastas'},
+ ravioles:{n:'Ravioles c/ Tuco',p:14000,cat:'Pastas'},
+ bifeCost:{n:'Bife Costilla c/ Fritas',p:17000,cat:'Parrilla'},
+ ensalCompleta:{n:'Ensalada Completa Pollo',p:8000,cat:'Ensaladas'},
+ asado:{n:'Asado c/ Fritas',p:18000,cat:'Parrilla'},
+ mila:{n:'Milanesa Gigante',p:14500,cat:'Parrilla'},
+ milaNapo:{n:'Mila Napolitana',p:16000,cat:'Parrilla'},
+ chuleta:{n:'Chuleta c/ Ensalada',p:15000,cat:'Parrilla'},
+ tortilla:{n:'Tortilla Papas',p:6000,cat:'Guarniciones'},
+ fritas:{n:'Papas Fritas',p:5000,cat:'Guarniciones'}
 };
 
-function renderAll(){
-  const cats={parrilla:"grid-parrilla",minutas:"grid-minutas",ensaladas:"grid-ensaladas",postres:"grid-postres",sandwich:"grid-sandwich",bebidas:"grid-bebidas"};
-  for(let cat in cats){
-    let html='';
-    for(let k in prods) if(prods[k].cat===cat){
-      html+=`<div class="it"><div class="tp"><div class="nm">${prods[k].name}</div><div class="pr">$${prods[k].price.toLocaleString('es-AR')}</div></div>${prods[k].desc?`<div class="ds">${prods[k].desc}</div>`:''}<div class="q"><div class="ct"><button class="bq" onclick="chg('${k}',-1)">−</button><span id="qty-${k}" class="cq">0</span><button class="bq" onclick="chg('${k}',1)">+</button></div></div></div>`;
-    }
-    document.getElementById(cats[cat]).innerHTML=html;
+let cart = {};
+let catActiva = 'Todos';
+
+function init(){
+  renderCats();
+  renderMenu();
+}
+function renderCats(){
+  const catsDiv = document.getElementById('cats');
+  const todas = ['Todos', ...new Set(Object.values(productos).map(x=>x.cat))];
+  catsDiv.innerHTML = todas.map(c=>`<div class="cat ${c===catActiva?'active':''}" onclick="filtrar('${c}')">${c}</div>`).join('');
+}
+function filtrar(c){
+  catActiva=c; renderCats(); renderMenu();
+}
+function renderMenu(){
+  const menuDiv = document.getElementById('menu');
+  let html='';
+  for(let id in productos){
+    const pr = productos[id];
+    if(catActiva!=='Todos' && pr.cat!==catActiva) continue;
+    const q = cart[id]||0;
+    html+=`<div class="item"><div class="info"><div class="name">${pr.n}</div><div class="price">$${pr.p.toLocaleString()}</div></div><div class="qty">${q>0?`<button onclick="chg('${id}',-1)">-</button><span>${q}</span>`:''}<button class="plus" onclick="chg('${id}',1)">+</button></div></div>`;
   }
+  menuDiv.innerHTML=html;
+  updateBar();
 }
-renderAll();
-
-const cart={};
-function chg(id,d){cart[id]=(cart[id]||0)+d;if(cart[id]<0)cart[id]=0;let e=document.getElementById('qty-'+id);if(e)e.innerText=cart[id];let t=0,c=0;for(let k in cart)if(cart[k]>0){t+=cart[k]*prods[k].price;c+=cart[k];}document.getElementById('tot').innerText='$'+t.toLocaleString('es-AR');document.getElementById('cnt').innerText=c+' productos';}
-function openM(){let c=0;for(let k in cart)c+=cart[k];if(!c){alert("Agregá productos");return;}document.getElementById('ov').style.display='flex';}
-function closeM(){document.getElementById('ov').style.display='none';}
-
-// FIX CATEGORIAS PINTADAS - SE MANTIENE PINTADA LA SELECCIONADA
-const pills=document.querySelectorAll('#navCat.pill');
-const secs=document.querySelectorAll('#sugerencias,#parrilla,#minutas,#ensaladas,#postres,#sandwich,#bebidas');
-pills.forEach(p=>{
-  p.addEventListener('click',e=>{
-    e.preventDefault();
-    pills.forEach(x=>x.classList.remove('a','active'));
-    p.classList.add('a','active');
-    document.querySelector(p.getAttribute('href'))?.scrollIntoView({behavior:'smooth',block:'start'});
-    p.scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'});
-  });
-});
-const ob=new IntersectionObserver(es=>{
-  es.forEach(en=>{
-    if(en.isIntersecting){
-      pills.forEach(x=>x.classList.remove('a','active'));
-      const ac=document.querySelector(`#navCat.pill[href="#${en.target.id}"]`);
-      if(ac) ac.classList.add('a','active');
-    }
-  });
-},{rootMargin:'-40% 0px -55% 0px'});
-secs.forEach(s=>ob.observe(s));
-
-// ENVIO SIN BARRIO Y SIN CELULAR - SOLO 3 CAMPOS
-function send(){
-  const nn=document.getElementById('nn').value.trim();
-  const dd=document.getElementById('dd').value.trim();
-  const pp=document.getElementById('pp').value;
-  const notas=document.getElementById('notas').value.trim();
-  let ok=true;
-  document.querySelectorAll('.err').forEach(e=>e.style.display='none');
-  if(nn.length<3){document.getElementById('err-nn').style.display='block';ok=false;}
-  if(dd.length<5){document.getElementById('err-dd').style.display='block';ok=false;}
-  if(!pp){document.getElementById('err-pp').style.display='block';ok=false;}
-  if(!ok){alert("Completa Nombre, Dirección y Pago");return;}
-
-  const ahora=new Date(); const fechaKey=ahora.toISOString().split('T')[0]; const pedidoId='PED-'+Date.now();
-  let items=[],tot=0; for(let k in cart) if(cart[k]>0){tot+=cart[k]*prods[k].price; items.push({id:k,nombre:prods[k].name,cant:cart[k],precio:prods[k].price});}
-  const pedido={id:pedidoId,fecha:ahora.toLocaleDateString('es-AR'),hora:ahora.toLocaleTimeString('es-AR'),fechaKey,cliente:{nombre:nn,direccion:dd},pago:pp,items,total:tot,notas,estado:"PENDIENTE",timestamp:firebase.database.ServerValue.TIMESTAMP};
-
-  db.ref('ventas/'+pedidoId).set(pedido);
-  db.ref('caja_diaria/'+fechaKey+'/'+pedidoId).set({total:tot,pago:pp,cliente:nn,hora:pedido.hora});
-  db.ref('comandas_parrilla/'+pedidoId).set(pedido);
-
-  // BASE CLIENTES POR NOMBRE (sin celular por ahora)
-  const nombreKey=nn.toLowerCase().replace(/\s+/g,'_').replace(/[^a-z0-9_]/g,'');
-  const cliRef=db.ref('clientes/'+nombreKey);
-  cliRef.once('value').then(s=>{
-    if(!s.exists()){
-      cliRef.set({nombre:nn,direccion:dd,primerPedido:fechaKey,ultimoPedido:fechaKey,pedidos:1,totalGastado:tot,estado:"NUEVO"});
-    }else{
-      const d=s.val();
-      cliRef.update({ultimoPedido:fechaKey,pedidos:d.pedidos+1,totalGastado:d.totalGastado+tot,estado:(d.pedidos+1)>=5?"FRECUENTE":"RECURRENTE"});
-    }
-    db.ref('clientes/'+nombreKey+'/historial/'+pedidoId).set({fecha:fechaKey,total:tot});
-  });
-
-  let txt=`*COMANDA ${pedidoId} - LA PERSEVERANCIA*%0A👤 ${nn}%0A📍 ${dd}%0A💳 ${pp}%0A%0A`;
-  items.forEach(i=>txt+=`${i.cant}x ${i.nombre}%0A`); if(notas) txt+=`%0A📝 ${notas}%0A`; txt+=`%0A*TOTAL $${tot.toLocaleString('es-AR')}*`;
-  window.open('https://wa.me/5491140434137?text='+txt,'_blank');
-  closeM();
-  for(let k in cart) cart[k]=0; document.querySelectorAll('.cq').forEach(e=>e.innerText='0'); document.getElementById('tot').innerText='$0'; document.getElementById('cnt').innerText='0 productos';
+function chg(id,d){
+  cart[id]=(cart[id]||0)+d;
+  if(cart[id]<=0) delete cart[id];
+  renderMenu();
 }
-</script></body></html>
+function updateBar(){
+  let tot=0,count=0;
+  for(let id in cart){tot+=cart[id]*productos[id].p;count+=cart[id]}
+  document.getElementById('cartCount').innerText=count+' items';
+  document.getElementById('cartTotal').innerText='$'+tot.toLocaleString();
+}
+function openModal(){
+  if(Object.keys(cart).length===0){alert('Carrito vacío');return}
+  document.getElementById('modal').style.display='flex';
+}
+function closeModal(){document.getElementById('modal').style.display='none'}
+
+function enviar(){
+  const nom = document.getElementById('nombre').value;
+  const dir = document.getElementById('direccion').value;
+  const pago = document.getElementById('pago').value;
+  const obs = document.getElementById('obs').value;
+  if(!nom||!dir){alert('Completá nombre y dirección');return}
+  let msg=`*PEDIDO PARRILLA LA PERSEVERANCIA*%0A%0A`;
+  let tot=0;
+  for(let id in cart){
+    const pr=productos[id];
+    const sub=cart[id]*pr.p;
+    tot+=sub;
+    msg+=`• ${pr.n} x${cart[id]} - $${sub.toLocaleString()}%0A`;
+  }
+  msg+=`%0A*Total: $${tot.toLocaleString()}*%0A%0A`;
+  msg+=`*Cliente:* ${nom}%0A*Dirección:* ${dir}%0A*Pago:* ${pago}%0A`;
+  if(obs) msg+=`*Obs:* ${obs}%0A`;
+  window.open(`https://wa.me/5491139525167?text=${msg}`,'_blank');
+  closeModal();
+}
+init();
+</script>
+</body>
+</html>
