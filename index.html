@@ -1,39 +1,93 @@
-<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Parrilla La Perseverancia</title>
-<style>*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}body{background:#121212;padding-bottom:90px;color:#fff}
-.banner-vintage{width:100%;height:165px;background:#e8dcc3 url('https://www.transparenttextures.com/patterns/old-paper.png');display:flex;align-items:center;justify-content:space-between;padding:0 0 0 25px;position:relative;overflow:hidden;border-bottom:4px solid #111}
-.banner-vintage:before{content:'';position:absolute;inset:10px;border:2px solid #3d2b1f;border-radius:2px;pointer-events:none;opacity:.6}
-.banner-text{position:relative;z-index:2;flex:0 0 55%;text-align:center}
-.banner-text h1{font-family:serif;font-weight:900;font-size:42px;letter-spacing:2px;color:#3d2b1f;line-height:0.9;text-transform:uppercase}
-.banner-text h2{font-family:serif;font-size:18px;color:#3d2b1f;margin-top:6px;letter-spacing:1px}
-.banner-text p{font-size:8px;color:#3d2b1f;margin-top:10px;letter-spacing:2px;text-transform:uppercase}
-.banner-img{flex:0 0 45%;height:100%;background:url('https://images.unsplash.com/photo-1546964052-d9333490c228?w=600') center/cover}
-@media(max-width:600px){.banner-vintage{height:115px;padding-left:12px}.banner-text h1{font-size:28px}.banner-text h2{font-size:12px}.banner-text p{font-size:6px}}
-.nav{background:#1e1e1e;padding:12px 15px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:20;border-bottom:1px solid #333}.nav b{font-size:18px;color:#ffcc00}
-.tabs{display:flex;gap:8px;padding:10px 12px;overflow-x:auto;background:#121212;position:sticky;top:48px;z-index:19}.tabs::-webkit-scrollbar{display:none}.tab{padding:8px 16px;border-radius:20px;background:#2a2a2a;color:#aaa;font-size:13px;white-space:nowrap;font-weight:700;cursor:pointer;border:1px solid #333}.tab.active{background:#ffcc00;color:#000;border-color:#ffcc00}
-.grid{padding:10px 12px;display:grid;grid-template-columns:1fr 1fr;gap:12px}.card{background:#fff;color:#111;border-radius:16px;overflow:hidden;padding:8px}.card .imgbox{width:100%;height:110px;background:#f5f5f5;border-radius:12px;overflow:hidden}.card .imgbox img{width:100%;height:100%;object-fit:cover}.card .title{font-size:13px;font-weight:800;margin:8px 4px 2px;height:32px;line-height:1.2}.card .desc{font-size:11px;color:#666;margin:0 4px;height:26px;overflow:hidden}.card .foot{display:flex;justify-content:space-between;align-items:center;margin:8px 4px 2px}.card .price{background:#ffcc00;padding:5px 10px;border-radius:8px;font-weight:800;font-size:13px}.card .add{width:34px;height:34px;background:#111;color:#fff;border:none;border-radius:50%;font-size:20px;font-weight:800;cursor:pointer}
-.cart{position:fixed;bottom:0;left:0;right:0;background:#1a1a1a;border-top:1px solid #333;padding:12px 15px;display:flex;justify-content:space-between;align-items:center;z-index:30}.cart b{color:#ffcc00}.cart button{background:#25D366;color:#fff;border:none;padding:12px 20px;border-radius:12px;font-weight:800}
-#modal{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:50;padding:15px}.box{background:#222;width:100%;max-width:400px;border-radius:16px;padding:20px;border:1px solid #333}.box h3{color:#ffcc00;text-align:center;margin-bottom:10px}.box input,.box select{width:100%;padding:12px;margin:6px 0;border-radius:10px;border:1px solid #444;background:#111;color:#fff}
-</style></head><body>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Perseverancia</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui, sans-serif}
+body{background:#0f0f0f;color:#fff;padding-bottom:85px;max-width:480px;margin:0 auto}
+.banner{width:100%;height:140px;background:#000;overflow:hidden}
+.banner img{width:100%;height:100%;object-fit:cover}
+.topbar{background:#1a1a1a;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #222}
+.topbar b{font-size:16px}
+.topbar.right{display:flex;gap:14px;font-size:18px;align-items:center}
+.badge{background:#ffcc00;color:#000;font-size:10px;font-weight:800;border-radius:50%;width:16px;height:16px;display:flex;align-items:center;justify-content:center;margin-left:-10px;margin-top:-8px}
+.tabs{display:flex;gap:8px;padding:12px 12px;overflow-x:auto;background:#0f0f0f}
+.tabs::-webkit-scrollbar{display:none}
+.tab{padding:7px 14px;border-radius:20px;background:#2a2a2a;color:#aaa;font-size:12px;white-space:nowrap;font-weight:600;cursor:pointer;border:1px solid #333}
+.tab.active{background:#ffcc00;color:#000;border-color:#ffcc00}
+.section{padding:14px 14px 6px;display:flex;justify-content:space-between;align-items:center}
+.section h2{font-size:15px;font-weight:700}
+.section a{color:#c5a000;font-size:12px;text-decoration:none;font-weight:600}
+.grid{padding:8px 10px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.card{background:#fff;border-radius:14px;overflow:hidden;padding:6px;color:#111}
+.card.pic{width:100%;height:108px;border-radius:10px;overflow:hidden;background:#222}
+.card.pic img{width:100%;height:100%;object-fit:cover;display:block}
+.card.info{padding:8px 4px 4px}
+.card.name{font-size:11px;font-weight:800;line-height:1.2;height:24px}
+.card.desc{font-size:9px;color:#777;margin-top:2px;height:20px;overflow:hidden;line-height:1.2}
+.card.foot{display:flex;justify-content:space-between;align-items:center;margin-top:6px}
+.card.price{background:#ffcc00;padding:4px 8px;border-radius:6px;font-weight:800;font-size:11px}
+.card.add{width:22px;height:22px;background:#111;color:#fff;border:none;border-radius:50%;font-size:14px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.bottom{position:fixed;bottom:0;left:0;right:0;background:#1a1a1a;border-top:1px solid #2a2a2a;display:flex;justify-content:space-around;padding:8px 0 10px;max-width:480px;margin:0 auto;z-index:30}
+.bottom div{display:flex;flex-direction:column;align-items:center;font-size:9px;color:#666;gap:3px}
+.bottom div.active{color:#ffcc00}
+.bottom span{font-size:18px}
+.cartbar{position:fixed;bottom:70px;left:0;right:0;background:#1a1a1a;border-top:1px solid #333;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;max-width:480px;margin:0 auto;z-index:29}
+#modal{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:50;padding:15px}.box{background:#222;width:100%;max-width:380px;border-radius:16px;padding:20px;border:1px solid #333}.box input,.box select{width:100%;padding:11px;margin:6px 0;border-radius:10px;border:1px solid #444;background:#111;color:#fff}
+</style>
+</head>
+<body>
 
-<div class="banner-vintage">
-  <div class="banner-text">
-    <h1>PARRILLA</h1>
-    <h2>"LA PERSEVERANCIA"</h2>
-    <p>Entrega a domicilio • Pedí ahora • Calidad premium</p>
-  </div>
-  <div class="banner-img"></div>
+<div class="banner"><img src="parrilla_banner.jpeg" onerror="this.src='https://images.unsplash.com/photo-1558030006-450066393d65?w=800'"></div>
+
+<div class="topbar"><div style="display:flex;gap:10px;align-items:center">☰ <b>La Perseverancia</b></div><div class="right">🔍 🛒<div class="badge" id="badge" style="display:none">0</div></div></div>
+
+<div class="tabs" id="tabs"></div>
+
+<div class="section"><h2>Menú destacado</h2><a href="#">Ver todo ›</a></div>
+
+<div class="grid" id="grid"></div>
+
+<div class="cartbar"><div><span id="cTot">0 items</span> - <b id="pTot" style="color:#ffcc00">$0</b></div><button onclick="openM()" style="background:#25D366;color:#fff;border:none;padding:10px 16px;border-radius:10px;font-weight:800">Pedir por WhatsApp</button></div>
+
+<div class="bottom">
+<div class="active"><span>🏠</span>Inicio</div>
+<div><span>🔍</span>Buscar</div>
+<div><span>➕</span>Pedidos</div>
+<div><span>♡</span>Favoritos</div>
+<div><span>👤</span>Perfil</div>
 </div>
 
-<div class="nav"><b>🔥 La Perseverancia</b><div>🛒 <span id="cartBadge" style="background:#ffcc00;color:#000;border-radius:50%;padding:2px 6px;font-size:11px;display:none">0</span></div></div>
-<div class="tabs" id="tabs"></div>
-<div class="grid" id="grid"></div>
-<div class="cart"><div><span id="cTot">0 items</span> - <b id="pTot">$0</b></div><button onclick="openM()">Pedir por WhatsApp</button></div>
-<div id="modal"><div class="box"><h3>Finalizar</h3><input id="nom" placeholder="Tu nombre"><input id="dir" placeholder="Dirección"><select id="pago"><option>Efectivo</option><option>Transferencia</option><option>Mercado Pago</option></select><input id="obs" placeholder="Obs"><div style="display:flex;gap:10px;margin-top:10px"><button onclick="closeM()" style="flex:1;padding:12px;background:#333;color:#fff;border:none;border-radius:10px">Cancelar</button><button onclick="send()" style="flex:1;padding:12px;background:#25D366;color:#fff;border:none;border-radius:10px;font-weight:800">Enviar 4043-4137</button></div></div></div>
+<div id="modal"><div class="box"><h3 style="color:#ffcc00;text-align:center;margin-bottom:10px">Finalizar Pedido</h3><input id="nom" placeholder="Tu nombre"><input id="dir" placeholder="Dirección"><select id="pago"><option>Efectivo</option><option>Transferencia</option><option>Mercado Pago</option></select><input id="obs" placeholder="Observaciones"><div style="display:flex;gap:10px;margin-top:12px"><button onclick="closeM()" style="flex:1;padding:12px;background:#333;color:#fff;border:none;border-radius:10px">Cancelar</button><button onclick="send()" style="flex:1;padding:12px;background:#25D366;color:#fff;border:none;border-radius:10px;font-weight:800">Enviar al 4043-4137</button></div></div></div>
 
 <script>
-const prods=[{id:'entrana',n:'Entraña a la Parrilla',d:'300g • jugoso • a la parrilla',p:12990,cat:'Parrilla'},{id:'chorizo',n:'Chorizo Artesanal',d:'Pack 4 unidades • especiado',p:8490,cat:'Parrilla'},{id:'papas',n:'Papas Fritas Crocantes',d:'Porción grande',p:4990,cat:'Guarniciones'},{id:'molleja',n:'Molleja a la Parrilla',d:'200g • limón & chimichurri',p:10990,cat:'Parrilla'},{id:'bifeCho',n:'Bife de Chorizo',d:'Bife c/ guarnición',p:32000,cat:'Parrilla'},{id:'asadoTira',n:'Asado de Tira',d:'Asado c/ guarnición',p:26500,cat:'Parrilla'},{id:'parr1x2',n:'Parrilla p/1 comen 2',d:'asado,vacio,chorizo',p:42640,cat:'Parrilla'},{id:'fideosAlb',n:'Fideos c/ Albóndigas',d:'Con tuco casero',p:14000,cat:'Pastas'},{id:'ravioles',n:'Ravioles c/ Tuco',d:'Ravioles de carne',p:14000,cat:'Pastas'},{id:'milaG',n:'Milanesa c/ Guarnición',d:'Milanesa ternera',p:14500,cat:'Milanesas'},{id:'ensalada',n:'Ensalada Completa Pollo',d:'Lechuga, tomate, pollo',p:8000,cat:'Ensaladas'}];
-let cart={},catAct='Parrilla';function renderTabs(){const cats=['Parrilla','Pastas','Milanesas','Ensaladas','Guarniciones'];document.getElementById('tabs').innerHTML=cats.map(c=>`<div class="tab ${c===catAct?'active':''}" onclick="catAct='${c}';renderTabs();renderGrid()">${c}</div>`).join('')}
-function renderGrid(){const list=prods.filter(x=>x.cat===catAct);document.getElementById('grid').innerHTML=list.map(p=>{const q=cart[p.id]||0;return `<div class="card"><div class="imgbox" style="background:#222;display:flex;align-items:center;justify-content:center;color:#ffcc00;font-weight:800">🔥</div><div class="title">${p.n}${q?` x${q}`:''}</div><div class="desc">${p.d}</div><div class="foot"><div class="price">$${p.p.toLocaleString()}</div><button class="add" onclick="add('${p.id}')">+</button></div></div>`}).join('')}
-function add(id){cart[id]=(cart[id]||0)+1;upd();renderGrid()}function upd(){let t=0,c=0;for(let k in cart){const p=prods.find(x=>x.id===k);t+=p.p*cart[k];c+=cart[k]}document.getElementById('cTot').innerText=c+' items';document.getElementById('pTot').innerText='$'+t.toLocaleString();const b=document.getElementById('cartBadge');if(c>0){b.style.display='inline';b.innerText=c}else{b.style.display='none'}}
-function openM(){if(!Object.keys(cart).length)return alert('Vacío');document.getElementById('modal').style.display='flex'}function closeM(){document.getElementById('modal').style.display='none'}function send(){const nom=document.getElementById('nom').value,dir=document.getElementById('dir').value,pago=document.getElementById('pago').value,obs=document.getElementById('obs').value;if(!nom||!dir)return alert('Falta nombre/dir');let msg=`*PEDIDO LA PERSEVERANCIA*%0A%0A`;let tot=0;for(let k in cart){const p=prods.find(x=>x.id===k);tot+=p.p*cart[k];msg+=`• ${p.n} x${cart[k]} - $${(p.p*cart[k]).toLocaleString()}%0A`}msg+=`%0A*Total: $${tot.toLocaleString()}*%0A*Cliente:* ${nom}%0A*Dir:* ${dir}%0A*Pago:* ${pago}%0A${obs?`*Obs:* ${obs}`:''}`;window.open(`https://wa.me/5491140434137?text=${msg}`,'_blank');closeM()}renderTabs();renderGrid();
-</script></body></html>
+const prods=[
+{id:'entrana',n:'Entraña a la Parrilla',d:'300g • jugoso • a la parrilla',p:12990,cat:'Parrilla',img:'https://images.unsplash.com/photo-1546964052-d9333490c228?w=300'},
+{id:'chorizo',n:'Chorizo Artesanal',d:'Pack 4 unidades • especiado',p:8490,cat:'Parrilla',img:'https://images.unsplash.com/photo-1583981720956-9b2b0e3a6a9b?w=300'},
+{id:'papas',n:'Papas Fritas Crocantes',d:'Porción grande • sal & perejil',p:4990,cat:'Guarniciones',img:'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=300'},
+{id:'molleja',n:'Molleja a la Parrilla',d:'200g • limón & chimichurri',p:10990,cat:'Parrilla',img:'https://images.unsplash.com/photo-1558030006-450066393d65?w=300'},
+{id:'bifeCho',n:'Bife de Chorizo',d:'Bife c/ guarnición',p:32000,cat:'Parrilla',img:'https://images.unsplash.com/photo-1546964124-0c849213df27?w=300'},
+{id:'asadoTira',n:'Asado de Tira',d:'Asado c/ guarnición',p:26500,cat:'Parrilla',img:'https://images.unsplash.com/photo-1558030006-450066393d65?w=300'},
+];
+let cart={},catAct='Parrilla';
+function renderTabs(){
+  const cats=['Parrilla','Bebidas','Entradas','Postres','Combos','Promos'];
+  document.getElementById('tabs').innerHTML=cats.map(c=>`<div class="tab ${c===catAct?'active':''}" onclick="catAct='${c}';renderTabs();renderGrid()">${c}</div>`).join('');
+}
+function renderGrid(){
+  const list = catAct==='Parrilla'? prods : prods.filter(x=>x.cat===catAct);
+  const show = list.length? list : prods;
+  document.getElementById('grid').innerHTML=show.map(p=>{
+    const q=cart[p.id]||0;
+    return `<div class="card"><div class="pic"><img src="${p.img}"></div><div class="info"><div class="name">${p.n}${q?` x${q}`:''}</div><div class="desc">${p.d}</div><div class="foot"><div class="price">$${p.p.toLocaleString()}</div><button class="add" onclick="add('${p.id}')">+</button></div></div></div>`
+  }).join('');
+}
+function add(id){cart[id]=(cart[id]||0)+1;upd();renderGrid()}
+function upd(){let t=0,c=0;for(let k in cart){const p=prods.find(x=>x.id===k);if(p){t+=p.p*cart[k];c+=cart[k]}}document.getElementById('cTot').innerText=c+' items';document.getElementById('pTot').innerText='$'+t.toLocaleString();const b=document.getElementById('badge');if(c>0){b.style.display='flex';b.innerText=c}else{b.style.display='none'}}
+function openM(){if(!Object.keys(cart).length)return alert('Carrito vacío');document.getElementById('modal').style.display='flex'}function closeM(){document.getElementById('modal').style.display='none'}function send(){const nom=document.getElementById('nom').value,dir=document.getElementById('dir').value,pago=document.getElementById('pago').value,obs=document.getElementById('obs').value;if(!nom||!dir)return alert('Falta nombre y dirección');let msg=`*PEDIDO LA PERSEVERANCIA*%0A%0A`;let tot=0;for(let k in cart){const p=prods.find(x=>x.id===k);if(!p)continue;tot+=p.p*cart[k];msg+=`• ${p.n} x${cart[k]} - $${(p.p*cart[k]).toLocaleString()}%0A`}msg+=`%0A*Total: $${tot.toLocaleString()}*%0A*Cliente:* ${nom}%0A*Dir:* ${dir}%0A*Pago:* ${pago}%0A${obs?`*Obs:* ${obs}`:''}`;window.open(`https://wa.me/5491140434137?text=${msg}`,'_blank');closeM()}
+renderTabs();renderGrid();
+</script>
+</body>
+</html>
