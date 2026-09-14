@@ -46,6 +46,9 @@ body{background:#0a0a0a;color:#fff;max-width:500px;margin:0 auto;padding-bottom:
 .sum{background:#0f0f0f;border:1px solid #222;border-radius:8px;padding:8px;margin:6px 0;font-size:10px;max-height:100px;overflow:auto}
 .btns{display:flex;gap:6px;margin-top:8px}
 .btns button{flex:1;padding:10px;border:none;border-radius:8px;font-weight:900;font-size:11px;cursor:pointer}
+.alias-box{display:none;background:#ffcc00;border:2px solid #000;border-radius:10px;padding:10px;margin:8px 0;text-align:center;color:#000}
+.alias-box b{font-size:11px;display:block}
+.alias-box span{font-size:16px;font-weight:900;background:#000;color:#ffcc00;padding:4px 12px;border-radius:8px;display:inline-block;margin-top:4px;letter-spacing:0.5px}
 </style>
 </head>
 <body>
@@ -62,7 +65,27 @@ body{background:#0a0a0a;color:#fff;max-width:500px;margin:0 auto;padding-bottom:
 
 <div class="cartbar" id="cartbar" style="display:none"><div><div id="cTot" style="font-size:10px;color:#888">0 items</div><b id="pTot" style="color:#ffcc00;font-size:12px">$0</b></div><button onclick="openM()" style="background:#25D366;color:#fff;border:none;padding:10px 16px;border-radius:10px;font-weight:900;font-size:11px">🟢 PEDIR</button></div>
 
-<div id="modal"><div class="box"><h3 style="color:#ffcc00;text-align:center;font-size:14px;margin-bottom:8px">Finalizar pedido</h3><div class="sum" id="sum"></div><input id="nom" placeholder="Nombre *"><input id="dir" placeholder="Dirección *"><select id="pago"><option>Efectivo</option><option>Transferencia</option><option>Mercado Pago</option></select><textarea id="obs" rows="2" placeholder="Observaciones (ej: sin chimichurri)"></textarea><div class="btns"><button onclick="closeM()" style="background:#333;color:#fff">Cancelar</button><button onclick="send()" style="background:#25D366;color:#fff">Enviar a cocina 🟢</button></div></div></div>
+<div id="modal"><div class="box">
+<h3 style="color:#ffcc00;text-align:center;font-size:14px;margin-bottom:8px">Finalizar pedido</h3>
+<div class="sum" id="sum"></div>
+<input id="nom" placeholder="Nombre *">
+<input id="dir" placeholder="Dirección *">
+<select id="pago" onchange="checkPago()">
+<option>Efectivo</option>
+<option>Transferencia</option>
+<option>Mercado Pago</option>
+</select>
+
+<!-- ALIAS RESALTADO -->
+<div class="alias-box" id="aliasBox">
+<b>💳 ALIAS PARA TRANSFERENCIA</b>
+<span onclick="navigator.clipboard.writeText('Av.argentina');alert('Alias copiado: Av.argentina')">Av.argentina</span>
+<div style="font-size:8px;margin-top:4px;font-weight:700">Tocá para copiar • Enviar comprobante al WhatsApp</div>
+</div>
+
+<textarea id="obs" rows="2" placeholder="Observaciones"></textarea>
+<div class="btns"><button onclick="closeM()" style="background:#333;color:#fff">Cancelar</button><button onclick="send()" style="background:#25D366;color:#fff">Enviar a cocina 🟢</button></div>
+</div></div>
 
 <script>
 const firebaseConfig={apiKey:"AIzaSyAvrpQSDoq9S87j3J7V4-uhJnPFCylCU",authDomain:"parrilla-la-perseveranci-f3f54.firebaseapp.com",databaseURL:"https://parrilla-la-perseveranci-f3f54-default-rtdb.firebaseio.com",projectId:"parrilla-la-perseveranci-f3f54"};
@@ -96,7 +119,8 @@ function renderGrid(){let list=cat==='todos'?MENU:MENU.filter(m=>m.cat===cat);do
 function add(n){cart[n]=(cart[n]||0)+1;upd();renderGrid();}
 function upd(){let t=0,c=0;for(let k in cart){const p=MENU.find(x=>x.n===k);if(p){t+=p.p*cart[k];c+=cart[k];}}document.getElementById('cTot').innerText=c+' items';document.getElementById('pTot').innerText='$'+t.toLocaleString();document.getElementById('cartbar').style.display=c>0?'flex':'none';}
 function addSugerencia(){cart['Ravioles c/estofado']=(cart['Ravioles c/estofado']||0)+1;upd();renderGrid();}
-function openM(){if(!Object.keys(cart).length)return alert('Carrito vacío');let h='',t=0;for(let k in cart){const p=MENU.find(x=>x.n===k);if(!p)continue;t+=p.p*cart[k];h+=`${k} x${cart[k]}<br>`}h+=`<br><b style="color:#ffcc00">Total $${t.toLocaleString()}</b>`;document.getElementById('sum').innerHTML=h;document.getElementById('modal').style.display='flex';}
+function checkPago(){const v=document.getElementById('pago').value;document.getElementById('aliasBox').style.display=(v==='Transferencia' || v==='Mercado Pago')?'block':'none';}
+function openM(){if(!Object.keys(cart).length)return alert('Carrito vacío');let h='',t=0;for(let k in cart){const p=MENU.find(x=>x.n===k);if(!p)continue;t+=p.p*cart[k];h+=`${k} x${cart[k]}<br>`}h+=`<br><b style="color:#ffcc00">Total $${t.toLocaleString()}</b>`;document.getElementById('sum').innerHTML=h;document.getElementById('modal').style.display='flex';checkPago();}
 function closeM(){document.getElementById('modal').style.display='none';}
 function send(){
  const nom=document.getElementById('nom').value.trim();
@@ -106,19 +130,18 @@ function send(){
  if(!nom||!dir){alert('Falta nombre y dirección');return;}
  let items=[],tot=0,msg=`*PEDIDO LA PERSEVERANCIA*%0A%0A`;
  for(let k in cart){const p=MENU.find(x=>x.n===k);if(!p)continue;tot+=p.p*cart[k];msg+=`• ${k} x${cart[k]} - $${p.p.toLocaleString()}%0A`;items.push({n:k,nombre:k,cantidad:cart[k],p:p.p,precio:p.p,cat:p.cat,sub:p.cat});}
- msg+=`%0A*Total: $${tot.toLocaleString()}*%0A*Cliente:* ${nom}%0A*Dir:* ${dir}%0A*Pago:* ${pago}%0A${obs?`*Obs:* ${obs}`:''}`;
+ msg+=`%0A*Total: $${tot.toLocaleString()}*%0A*Cliente:* ${nom}%0A*Dir:* ${dir}%0A*Pago:* ${pago}%0A`;
+ if(pago==='Transferencia'){msg+=`*ALIAS: Av.argentina*%0A`;}
+ msg+=`${obs?`*Obs:* ${obs}`:''}`;
  const shortId=Date.now().toString().slice(-4);
  const key=`Canal - WhatsApp #${shortId} - ${nom}`;
- const data={mesa:key,mesaBase:'Canal - WhatsApp',canal:'Canal - WhatsApp',cliente:nom,direccion:dir,pago:pago,obs:obs,items:items,total:tot,total_cobrado:tot,estado:'RECIBIDO',estado_parrilla:'RECIBIDO',estado_cocina:'RECIBIDO',emisor:'Cliente Web',hora:new Date().toLocaleTimeString().slice(0,5),timestamp:Date.now(),timestamp_estado:Date.now(),id:Date.now(),origen:'web_pedidos'};
- // ABRIR WHATSAPP PRIMERO - NO ESPERAR FIREBASE
+ const data={mesa:key,mesaBase:'Canal - WhatsApp',canal:'Canal - WhatsApp',cliente:nom,direccion:dir,pago:pago,alias: pago==='Transferencia'?'Av.argentina':'',obs:obs,items:items,total:tot,total_cobrado:tot,estado:'RECIBIDO',estado_parrilla:'RECIBIDO',estado_cocina:'RECIBIDO',emisor:'Cliente Web',hora:new Date().toLocaleTimeString().slice(0,5),timestamp:Date.now(),timestamp_estado:Date.now(),id:Date.now(),origen:'web_pedidos'};
  const waUrl=`https://wa.me/5491140434137?text=${msg}`;
  window.open(waUrl,'_blank');
- // FIREBASE EN PARALELO - PARA GUSTAVO, MARIANA Y HERNAN
  db.ref('comandas_activas/'+key).set(data).then(()=>{
-   db.ref('mensajes').push({emisor:'WEB',texto:`🟢 WHATSAPP #${shortId} - ${nom} $${tot.toLocaleString()} - ${dir}`,hora:new Date().toLocaleTimeString().slice(0,5),ts:Date.now(),destino:'todos'});
- }).catch(e=>{console.log('Firebase error',e);});
+   db.ref('mensajes').push({emisor:'WEB',texto:`🟢 WHATSAPP #${shortId} - ${nom} $${tot.toLocaleString()} - ${pago} ${pago==='Transferencia'?'ALIAS Av.argentina':''}`,hora:new Date().toLocaleTimeString().slice(0,5),ts:Date.now(),destino:'todos'});
+ });
  cart={};upd();renderGrid();closeM();
- alert(`¡Pedido #${shortId} enviado! Ya está en cocina`);
 }
 renderTabs();renderGrid();
 </script>
