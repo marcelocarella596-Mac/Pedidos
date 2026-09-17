@@ -156,7 +156,12 @@ function send(){
  msg+=`%0A*Total: $${tot.toLocaleString()}*%0A*Cliente:* ${nom}%0A*Dir:* ${dir}%0A${tel?`*Tel:* ${tel}%0A`:''}*Pago:* ${pago}%0A${pago==='Transferencia'?`*Alias: Av.argentina*%0A`:''}${obs?`*Obs:* ${obs}`:''}`;
  const shortId=Date.now().toString().slice(-4);
  const key=`Canal - WhatsApp #${shortId} - ${nom}`;
- const data={mesa:key,mesaBase:'Canal - WhatsApp',canal:'Canal - WhatsApp',cliente:nom,direccion:dir,telefono:tel,pago:pago,alias:pago==='Transferencia'?'Av.argentina':'',obs:obs,items:items,total:tot,total_cobrado:tot,estado:'RECIBIDO',estado_parrilla:'RECIBIDO',estado_cocina:'RECIBIDO',emisor:'Cliente Web',hora:new Date().toLocaleTimeString().slice(0,5),timestamp:Date.now(),id:Date.now()};
+ const catsParrilla=['parrilla','minuta','sandwich'];
+ const itemsParrilla=items.filter(i=>catsParrilla.includes(i.cat));
+ const itemsCocina=items.filter(i=>!catsParrilla.includes(i.cat));
+ const hasParrilla=itemsParrilla.length>0;
+ const hasCocina=itemsCocina.length>0;
+ const data={mesa:key,mesaBase:'Canal - WhatsApp',canal:'Canal - WhatsApp',cliente:nom,direccion:dir,telefono:tel,pago:pago,alias:pago==='Transferencia'?'Av.argentina':'',obs:obs,items:items,itemsParrilla:itemsParrilla,itemsCocina:itemsCocina,total:tot,total_cobrado:tot,estado:'RECIBIDO',estado_mozo:'RECIBIDO',estado_parrilla:hasParrilla?'RECIBIDO':'SIN_ITEMS',estado_cocina:hasCocina?'RECIBIDO':'SIN_ITEMS',roles:['Mozo',...(hasParrilla?['Parrilla']:[]),...(hasCocina?['Cocina']:[])],para:{Mozo:true,Parrilla:hasParrilla,Cocina:hasCocina},emisor:'Cliente Web',hora:new Date().toLocaleTimeString().slice(0,5),timestamp:Date.now(),id:Date.now()};
  const waUrl=`https://wa.me/5491140434137?text=${msg}`;
  window.open(waUrl,'_blank');
  db.ref('comandas_activas/'+key).set(data).then(()=>{db.ref('mensajes').push({emisor:'WEB',texto:`🟢 #${shortId} - ${nom} $${tot.toLocaleString()}`,hora:new Date().toLocaleTimeString().slice(0,5),ts:Date.now(),destino:'todos'});});
