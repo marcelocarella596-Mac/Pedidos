@@ -53,20 +53,16 @@ body{background:#080808;color:#fff;max-width:500px;margin:0 auto;padding-bottom:
 </head>
 <body>
 <div class="banner"><img src="parrilla_banner.jpeg" onerror="this.src='https://images.unsplash.com/photo-1544025162-d76694265947?w=600'"></div>
-
 <div class="carrusel-wrap">
 <div class="carrusel-head"><span>MENÚ DEL DÍA • FOTOS REALES</span><span style="color:#555">‹ desliza ›</span></div>
 <div class="carrusel" id="carrusel"></div>
 </div>
-
 <div class="tabs" id="tabs"></div>
 <div class="grid" id="grid"></div>
-
 <div class="cartbar" id="cartbar" style="display:none">
 <div><div id="cTot" style="font-size:10px;color:#888">0 items</div><b id="pTot" style="font-size:13px;color:#fff">$0</b></div>
 <button onclick="openM()" style="background:#25D366;color:#fff;border:none;padding:11px 18px;border-radius:11px;font-weight:900;font-size:12px">PEDIR POR WHATSAPP</button>
 </div>
-
 <div id="modal">
 <div class="box">
 <h3 style="text-align:center;font-size:14px;margin-bottom:10px;color:#fff">Finalizar pedido</h3>
@@ -80,13 +76,10 @@ body{background:#080808;color:#fff;max-width:500px;margin:0 auto;padding-bottom:
 <div class="btns"><button onclick="closeM()" style="background:#2a2a2a;color:#fff">Cancelar</button><button onclick="send()" style="background:#25D366;color:#fff">Enviar a cocina</button></div>
 </div>
 </div>
-
 <script>
 const firebaseConfig={apiKey:"AIzaSyAvrpQSDoq9S87j3J7V4-uhJnPFCylCU",authDomain:"parrilla-la-perseveranci-f3f54.firebaseapp.com",databaseURL:"https://parrilla-la-perseveranci-f3f54-default-rtdb.firebaseio.com",projectId:"parrilla-la-perseveranci-f3f54"};
 if(!firebase.apps.length)firebase.initializeApp(firebaseConfig);
 const db=firebase.database();
-
-// MENU ÚNICO - 6 REALES + RESTO CON SIMILITUD
 const MENU=[
 {n:'Ravioles con Estofado',p:12500,cat:'pasta',img:'imagenes/ravioles_estofado.jpeg', real:true},
 {n:'Tallarines con Albóndigas',p:11500,cat:'pasta',img:'imagenes/tallarines_albondigas.jpeg', real:true},
@@ -94,7 +87,6 @@ const MENU=[
 {n:'Costillas a la Riojana',p:14500,cat:'minuta',img:'imagenes/costillas_riojana.jpeg', real:true},
 {n:'Milanesa con Fritas',p:14500,cat:'minuta',img:'imagenes/milanesa_fritas.jpeg', real:true},
 {n:'Churrasco con Papas',p:13500,cat:'minuta',img:'imagenes/churrasco_papas.jpeg', real:true},
-// PARRILLA con imagen similar real
 {n:'Asado',p:12000,cat:'parrilla',img:'https://images.unsplash.com/photo-1546964052-d9333490c228?w=400&q=80'},
 {n:'Vacío',p:12500,cat:'parrilla',img:'https://images.unsplash.com/photo-1558030006-450066393d65?w=400&q=80'},
 {n:'Entraña',p:16000,cat:'parrilla',img:'https://images.unsplash.com/photo-1546964124-0c849213df27?w=400&q=80'},
@@ -110,7 +102,6 @@ const MENU=[
 {n:'Quilmes 1L',p:5000,cat:'cerveza',img:'https://images.unsplash.com/photo-1608270586620-248524c67de9?w=400&q=80'},
 {n:'Flan',p:4000,cat:'postre',img:'https://images.unsplash.com/photo-1488477181946-64290103bbd6?w=400&q=80'},
 ];
-
 let cart={},cat='todos';
 const CATS=['todos','parrilla','pasta','minuta','sandwich','guarnicion','bebida','postre'];
 function renderTabs(){document.getElementById('tabs').innerHTML=CATS.map(c=>`<div class="tab ${cat===c?'active':''}" onclick="cat='${c}';renderTabs();renderGrid()">${c.toUpperCase()}</div>`).join('');}
@@ -144,28 +135,55 @@ function upd(){let t=0,c=0;for(let k in cart){const p=MENU.find(x=>x.n===k);if(p
 function checkPago(){const v=document.getElementById('pago').value;document.getElementById('aliasBox').style.display=(v==='Transferencia'||v==='Mercado Pago')?'block':'none';}
 function openM(){if(!Object.keys(cart).length)return alert('Carrito vacío');let h='',t=0;for(let k in cart){const p=MENU.find(x=>x.n===k);if(!p)continue;t+=p.p*cart[k];h+=`${k} x${cart[k]}<br>`}h+=`<br><b style="color:#fff">Total $${t.toLocaleString()}</b>`;document.getElementById('sum').innerHTML=h;document.getElementById('modal').style.display='flex';checkPago();}
 function closeM(){document.getElementById('modal').style.display='none';}
-function send(){
+
+// ========= ENVIO A LOS 3 MODULOS - CORREGIDO =========
+async function send(){
  const nom=document.getElementById('nom').value.trim();
  const dir=document.getElementById('dir').value.trim();
  const tel=document.getElementById('tel').value.trim().replace(/\D/g,'');
  const pago=document.getElementById('pago').value;
  const obs=document.getElementById('obs').value.trim();
  if(!nom||!dir){alert('Falta nombre y dirección');return;}
+
  let items=[],tot=0,msg=`*PEDIDO LA PERSEVERANCIA*%0A%0A`;
- for(let k in cart){const p=MENU.find(x=>x.n===k);if(!p)continue;tot+=p.p*cart[k];msg+=`• ${k} x${cart[k]}%0A`;items.push({n:k,nombre:k,cantidad:cart[k],p:p.p,precio:p.p,cat:p.cat});}
+ for(let k in cart){
+   const p=MENU.find(x=>x.n===k); if(!p) continue;
+   tot+=p.p*cart[k];
+   msg+=`• ${k} x${cart[k]}%0A`;
+   items.push({n:k,nombre:k,cantidad:cart[k],p:p.p,precio:p.p,cat:p.cat});
+ }
  msg+=`%0A*Total: $${tot.toLocaleString()}*%0A*Cliente:* ${nom}%0A*Dir:* ${dir}%0A${tel?`*Tel:* ${tel}%0A`:''}*Pago:* ${pago}%0A${pago==='Transferencia'?`*Alias: Av.argentina*%0A`:''}${obs?`*Obs:* ${obs}`:''}`;
- const shortId=Date.now().toString().slice(-4);
- const key=`Canal - WhatsApp #${shortId} - ${nom}`;
- const catsParrilla=['parrilla','minuta','sandwich'];
- const itemsParrilla=items.filter(i=>catsParrilla.includes(i.cat));
- const itemsCocina=items.filter(i=>!catsParrilla.includes(i.cat));
- const hasParrilla=itemsParrilla.length>0;
- const hasCocina=itemsCocina.length>0;
- const data={mesa:key,mesaBase:'Canal - WhatsApp',canal:'Canal - WhatsApp',cliente:nom,direccion:dir,telefono:tel,pago:pago,alias:pago==='Transferencia'?'Av.argentina':'',obs:obs,items:items,itemsParrilla:itemsParrilla,itemsCocina:itemsCocina,total:tot,total_cobrado:tot,estado:'RECIBIDO',estado_mozo:'RECIBIDO',estado_parrilla:hasParrilla?'RECIBIDO':'SIN_ITEMS',estado_cocina:hasCocina?'RECIBIDO':'SIN_ITEMS',roles:['Mozo',...(hasParrilla?['Parrilla']:[]),...(hasCocina?['Cocina']:[])],para:{Mozo:true,Parrilla:hasParrilla,Cocina:hasCocina},emisor:'Cliente Web',hora:new Date().toLocaleTimeString().slice(0,5),timestamp:Date.now(),id:Date.now()};
- const waUrl=`https://wa.me/5491140434137?text=${msg}`;
- window.open(waUrl,'_blank');
- db.ref('comandas_activas/'+key).set(data).then(()=>{db.ref('mensajes').push({emisor:'WEB',texto:`🟢 #${shortId} - ${nom} $${tot.toLocaleString()}`,hora:new Date().toLocaleTimeString().slice(0,5),ts:Date.now(),destino:'todos'});});
- cart={};upd();renderGrid();closeM();
+
+ const shortId=Date.now().toString().slice(-5);
+ const key=`WhatsApp #${shortId} - ${nom} - ${new Date().toLocaleTimeString().slice(0,5)}`;
+
+ // SEPARA PARA QUE CADA COCINA VEA LO SUYO, PERO MANDA A LOS 3
+ const esParrilla=(c)=>['parrilla','minuta','sandwich'].includes(c);
+ const itemsParrilla=items.filter(i=>esParrilla(i.cat));
+ const itemsCocina=items.filter(i=>!esParrilla(i.cat));
+
+ const data={
+   id:shortId, mesa:key, mesaBase:'WhatsApp', canal:'WhatsApp',
+   cliente:nom, direccion:dir, telefono:tel, pago:pago,
+   alias:pago==='Transferencia'?'Av.argentina':'', obs:obs,
+   items:items, itemsParrilla:itemsParrilla, itemsCocina:itemsCocina,
+   total:tot, total_cobrado:tot,
+   estado:'RECIBIDO', estado_mozo:'RECIBIDO',
+   estado_parrilla: itemsParrilla.length?'RECIBIDO':'RECIBIDO',
+   estado_cocina: itemsCocina.length?'RECIBIDO':'RECIBIDO',
+   roles:['Mozo','Parrilla','Cocina'],
+   para:{Mozo:true, Parrilla:true, Cocina:true},
+   emisor:'Cliente Web', hora:new Date().toLocaleTimeString().slice(0,5),
+   timestamp:Date.now(), cobradaEn:Date.now()
+ };
+
+ try{
+   await db.ref('comandas_activas/'+key).set(data);
+   await db.ref('mensajes').push({emisor:'WEB',texto:`🟢 NUEVO #${shortId} - ${nom} $${tot.toLocaleString()}`,hora:data.hora,ts:Date.now(),destino:'todos'});
+   const waUrl=`https://wa.me/5491140434137?text=${msg}`;
+   window.open(waUrl,'_blank');
+   cart={}; upd(); renderGrid(); closeM();
+ }catch(e){alert('Error Firebase: '+e.message);}
 }
 renderTabs();renderCarrusel();renderGrid();
 </script>
