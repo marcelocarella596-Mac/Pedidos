@@ -180,7 +180,7 @@ async function send(){
  try{
    await db.ref('comandas_activas/'+key).set(data);
    await db.ref('mensajes').push({emisor:'WEB',texto:`🟢 NUEVO #${shortId} - ${nom} $${tot.toLocaleString()}`,hora:data.hora,ts:Date.now(),destino:'todos'});
-   const waUrl=`https://wa.me/5491140434137?text=${msg}`;
+   const waUrl=`https://wa.me/5491161698041?text=${msg}`;
    window.open(waUrl,'_blank');
    cart={}; upd(); renderGrid(); closeM();
  }catch(e){alert('Error Firebase: '+e.message);}
